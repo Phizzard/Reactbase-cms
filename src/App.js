@@ -1,25 +1,71 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Redirect , Route, Switch } from 'react-router-dom';
+import * as firebase from 'firebase';
+import config from './firebase.json';
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
+import Index from './components/Index';
+import Login from './components/Login';
+import AddContentType from './components/AddContentType'
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-        <div>
-            <Navbar />
-        <div className="container-fluid">
-          <div className="row">
-                <Sidebar />
-            <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-                <Dashboard />
-            </main>
-          </div>
-        </div>
-  </div>
-    );
-  }
+    constructor(props){
+        super(props);
+        this.state = {
+            user: {},
+            authed: true
+        };
+    }
+    componentDidMount(){
+        /*firebase.initializeApp(config);
+        firebase.auth().onAuthStateChanged((user) => {
+            user ?
+                this.setState({ user , authed: true})
+                :
+                this.setState({ user: null, authed: false})
+            ;
+        });*/
+    }
+    render() {
+        return (
+            <BrowserRouter>
+                <div>
+                    <Navbar />
+                    <div className="container-fluid">
+                        <Switch>
+                            <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
+                            <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/add-content/`} component={AddContentType} />
+                            <PublicOnlyRoute authed={this.state.authed} path='/login' component={Login} />
+                            <Route render={function(){
+                                return <h2>404 Not Found</h2>
+                            }} />
+                        </Switch>
+                    </div>
+                </div>
+            </BrowserRouter>
+        );
+    }
+}
+
+function PrivateRoute ({component: Component, authed, user, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === true
+        ? <Component {...props} user={user} />
+        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+    />
+  )
+}
+function PublicOnlyRoute ({component: Component, authed, ...rest}) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => authed === false
+        ? <Component {...props} />
+        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
+    />
+  )
 }
 
 export default App;
