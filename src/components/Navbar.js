@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import Authentication from '../controllers/Authentication';
+var showUserDropdown = false;
 export default class Navbar extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            showUserDropdown: false
+        }
+        this.handleSignOut = this.handleSignOut.bind(this);
+        this.handleUserDropdown = this.handleUserDropdown.bind(this);
+    }
     render(){
         return(
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -20,19 +29,40 @@ export default class Navbar extends Component {
                         <li className="nav-item">
                             <a className="nav-link" href="#">Settings</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Profile</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Help</a>
-                        </li>
                     </ul>
                     <form className="form-inline mt-2 mt-md-0">
                         <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
+                    {
+                        this.props.user && (
+                            <div className="dropdown show">
+                                <a className="dropdown-toggle" href="" onClick={this.handleUserDropdown} aria-haspopup="true" aria-expanded="false">
+                                    <img className="user-image" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=40" />
+                                </a>
+                                {
+                                    this.state.showUserDropdown && (
+                                        <div className="dropdown-menu user-options">
+                                            <a href="" className="dropdown-item" onClick={this.handleSignOut}>Sign Out</a>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        )
+                    }
                 </div>
             </nav>
         );
+    }
+    handleSignOut(e){
+        e.preventDefault();
+        let auth = new Authentication();
+        auth.LogOut();
+    }
+    handleUserDropdown(e){
+        e.preventDefault();
+        this.setState({
+            showUserDropdown: !this.state.showUserDropdown
+        });
     }
 }

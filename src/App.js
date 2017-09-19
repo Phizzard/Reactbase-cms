@@ -30,7 +30,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Navbar />
+                    <Navbar user={this.state.user} />
                     <div className="container-fluid">
                         <Switch>
                             <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
