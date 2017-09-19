@@ -12,19 +12,19 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            user: {},
-            authed: true
+            user: null,
+            authed: false
         };
     }
     componentDidMount(){
-        /*firebase.initializeApp(config);
+        firebase.initializeApp(config);
         firebase.auth().onAuthStateChanged((user) => {
             user ?
                 this.setState({ user , authed: true})
                 :
                 this.setState({ user: null, authed: false})
             ;
-        });*/
+        });
     }
     render() {
         return (

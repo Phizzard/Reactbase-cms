@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
+import Authentication from '../controllers/Authentication';
+
 export default class Dashboard extends Component {
     render(){
         return(
             <div>
                 <h1>Dashboard</h1>
-
+                <button className="btn btn-outline-warning" onClick={this.handleSignOut}>Sign Out</button>
                 <section className="row text-center placeholders">
                   <div className="col-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIABAAJ12AAAACwAAAAAAQABAAACAkQBADs=" width="200" height="200" className="img-fluid rounded-circle" alt="Generic placeholder thumbnail" />
@@ -159,5 +161,10 @@ export default class Dashboard extends Component {
                 </div>
             </div>
         );
+    }
+    handleSignOut(e){
+        e.preventDefault();
+        let auth = new Authentication();
+        auth.LogOut();
     }
 }

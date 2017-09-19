@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Authentication from '../controllers/Authentication';
 
 export default class Login extends Component {
     render(){
@@ -8,19 +9,29 @@ export default class Login extends Component {
                     <div className="card-body">
                         <form>
                             <div className="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                                <label htmlFor="Email">Email address</label>
+                                <input type="email" className="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email" />
                                 <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                           </div>
                           <div className="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                            <label htmlFor="Password">Password</label>
+                            <input type="password" className="form-control" id="Password" placeholder="Password" />
                           </div>
-                          <button type="submit" className="btn btn-primary">Submit</button>
+                          <button type="submit" className="btn btn-primary" onClick={this.handleLogIn}>Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
         );
+    }
+    handleLogIn(e){
+        e.preventDefault();
+
+        let email = document.getElementById('Email').value,
+            password = document.getElementById('Password').value,
+            auth = new Authentication();
+        ;
+        auth.LogIn(email, password);
+
     }
 }

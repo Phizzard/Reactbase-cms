@@ -6,7 +6,7 @@ export default class Navbar extends Component {
         return(
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <NavLink to='/'>
-                    <a className="navbar-brand">Reactbase</a>
+                    <span className="navbar-brand">Reactbase</span>
                 </NavLink>
                 <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
