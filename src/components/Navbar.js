@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import hash from 'md5';
 import Authentication from '../controllers/Authentication';
-var showUserDropdown = false;
 export default class Navbar extends Component {
     constructor(props){
         super(props);
@@ -28,10 +27,10 @@ export default class Navbar extends Component {
                 <div className="collapse navbar-collapse" id="navbarsExampleDefault">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="">Home <span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Settings</a>
+                            <a className="nav-link" href="">Settings</a>
                         </li>
                     </ul>
                     <form className="form-inline mt-2 mt-md-0">
@@ -42,7 +41,7 @@ export default class Navbar extends Component {
                         this.props.user && (
                             <div className="dropdown show">
                                 <a className="dropdown-toggle" href="" onClick={this.handleUserDropdown} aria-haspopup="true" aria-expanded="false">
-                                    <img className="user-image" src={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />
+                                    <img className="user-image" alt="User" src={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />
                                 </a>
                                 {
                                     this.state.showUserDropdown && (
