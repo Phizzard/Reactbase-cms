@@ -16,7 +16,7 @@ class App extends Component {
             authed: false
         };
     }
-    componentDidMount(){
+    componentWillMount(){
         firebase.initializeApp(config);
         firebase.auth().onAuthStateChanged((user) => {
             user ?

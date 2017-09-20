@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import hash from 'md5';
 import Authentication from '../controllers/Authentication';
 var showUserDropdown = false;
 export default class Navbar extends Component {
@@ -12,6 +13,9 @@ export default class Navbar extends Component {
         this.handleUserDropdown = this.handleUserDropdown.bind(this);
     }
     render(){
+        const   gravatarUrl = 'https://www.gravatar.com/avatar/',
+                options = '?s=40&d=mm'
+        ;
         return(
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <NavLink to='/'>
@@ -38,7 +42,7 @@ export default class Navbar extends Component {
                         this.props.user && (
                             <div className="dropdown show">
                                 <a className="dropdown-toggle" href="" onClick={this.handleUserDropdown} aria-haspopup="true" aria-expanded="false">
-                                    <img className="user-image" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=40" />
+                                    <img className="user-image" src={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />
                                 </a>
                                 {
                                     this.state.showUserDropdown && (
