@@ -47,11 +47,16 @@ export default class Sidebar extends Component {
         );
     }
     renderContent(){
-        return Object.entries(this.state.content).map((item)=>{
+        return Object.entries(this.state.content).map((_item)=>{
+            let item = {
+                id: _item[0],
+                title: _item[1].title,
+                type: _item[1].type
+            };
             return(
-                <li className="nav-item" key={item[0]}>
-                    <NavLink to={`/content/${item[0]}`}>
-                        <span className="nav-link" href="">{item[0]}</span>
+                <li className="nav-item" key={item.id}>
+                    <NavLink to={`/content/${item.id}${item.type ==='single' ? ('/edit'):('')}`}>
+                        <span className="nav-link" href="">{item.id}</span>
                     </NavLink>
                 </li>
             );
