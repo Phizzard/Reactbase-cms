@@ -5,7 +5,8 @@ import config from './firebase.json';
 import Navbar from './components/Navbar';
 import Index from './components/Index';
 import Login from './components/Login';
-import AddContentType from './components/AddContentType'
+import AddContentType from './components/Content/AddType'
+import ViewContentType from './components/Content/ViewType'
 import './App.css';
 
 class App extends Component {
@@ -34,7 +35,8 @@ class App extends Component {
                     <div className="container-fluid">
                         <Switch>
                             <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
-                            <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/add-content/`} component={AddContentType} />
+                            <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/add`} component={AddContentType} />
+                            <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId`} component={ViewContentType} />
                             <PublicOnlyRoute authed={this.state.authed} path='/login' component={Login} />
                             <Route render={function(){
                                 return <h2>404 Not Found</h2>
@@ -48,6 +50,7 @@ class App extends Component {
 }
 
 function PrivateRoute ({component: Component, authed, user, ...rest}) {
+    console.log(authed);
   return (
     <Route
       {...rest}

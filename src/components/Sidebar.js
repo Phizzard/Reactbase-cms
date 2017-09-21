@@ -40,7 +40,7 @@ export default class Sidebar extends Component {
               <ul className="nav nav-pills flex-column">
                   {this.renderContent()}
               </ul>
-              <NavLink exact to='/add-content/'>
+              <NavLink exact to='/content/add'>
                   <button className="btn btn-success">Add Content Type</button>
               </NavLink>
             </nav>
@@ -50,7 +50,9 @@ export default class Sidebar extends Component {
         return Object.entries(this.state.content).map((item)=>{
             return(
                 <li className="nav-item" key={item[0]}>
-                  <a className="nav-link" href="">{item[0]}</a>
+                    <NavLink to={`/content/${item[0]}`}>
+                        <span className="nav-link" href="">{item[0]}</span>
+                    </NavLink>
                 </li>
             );
         });
