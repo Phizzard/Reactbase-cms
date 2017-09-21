@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Sidebar from '../Sidebar';
-import Content from '../../controllers/Content';
+import EditRecordForm from './EditRecordForm';
+import ContentController from '../../controllers/Content';
 
 export default class EditRecord extends Component {
     constructor(props){
@@ -14,7 +15,7 @@ export default class EditRecord extends Component {
         this.fetchRecordData();
     }
     fetchRecordData(){
-        let fetch = new Content();
+        let fetch = new ContentController();
         fetch.GetRecord(this.props.match.params.contentId)
             .then((result) =>{
                 this.setState({
@@ -29,6 +30,7 @@ export default class EditRecord extends Component {
                 <Sidebar />
                 <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
                     <h1>Edit {formattedId} Page</h1>
+                    <EditRecordForm data={this.state.data} />
                 </main>
             </div>
         );

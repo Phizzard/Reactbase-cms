@@ -52,7 +52,6 @@ class App extends Component {
 }
 
 function PrivateRoute ({component: Component, authed, user, ...rest}) {
-    console.log(authed);
   return (
     <Route
       {...rest}

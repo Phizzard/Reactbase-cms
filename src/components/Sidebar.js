@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import Content from '../controllers/Content';
+import ContentController from '../controllers/Content';
 
 export default class Sidebar extends Component {
     constructor(props){
@@ -11,7 +11,7 @@ export default class Sidebar extends Component {
         this.renderContent = this.renderContent.bind(this);
     }
     componentDidMount(){
-        let fetch = new Content();
+        let fetch = new ContentController();
         fetch.List().then((content)=>{
             this.setState({
                 content: content
