@@ -10,6 +10,8 @@ export default class ContextualInput extends Component {
             value: '',
             placeholder: ''
         }
+
+        this.handleInput = this.handleInput.bind(this);
     }
     componentDidMount(){
         this.setState({
@@ -27,9 +29,21 @@ export default class ContextualInput extends Component {
         return(
             <div className="form-group">
                 <label htmlFor={this.props.id}>{this.props.label}</label>
-                <input type={this.props.type} className="form-control" id={this.props.id} placeholder={this.props.placeholder} value={this.state.value} />
+                <input  type={this.props.type}
+                        className="form-control"
+                        id={this.props.id}
+                        placeholder={this.props.placeholder}
+                        value={this.state.value}
+                        onChange={this.handleInput} />
             </div>
         );
+    }
+    handleInput(e){
+        e.preventDefault();
+        let element = e.target;
+        this.setState({
+            value: element.value
+        });
     }
 }
 
