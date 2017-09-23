@@ -6,10 +6,12 @@ export default class Navbar extends Component {
     constructor(props){
         super(props);
         this.state = {
-            showUserDropdown: false
+            showUserDropdown: false,
+            collapse: true
         }
         this.handleSignOut = this.handleSignOut.bind(this);
         this.handleUserDropdown = this.handleUserDropdown.bind(this);
+        this.handleCollapse = this.handleCollapse.bind(this);
     }
     render(){
         const   gravatarUrl = 'https://www.gravatar.com/avatar/',
@@ -20,11 +22,11 @@ export default class Navbar extends Component {
                 <NavLink to='/'>
                     <span className="navbar-brand">Reactbase</span>
                 </NavLink>
-                <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler d-lg-none" type="button" onClick={this.handleCollapse} aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarsExampleDefault">
+                <div className={`${this.state.collapse && ('collapse')} navbar-collapse`} id="navbarsExampleDefault">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                             <a className="nav-link" href="">Home <span className="sr-only">(current)</span></a>
@@ -66,6 +68,12 @@ export default class Navbar extends Component {
         e.preventDefault();
         this.setState({
             showUserDropdown: !this.state.showUserDropdown
+        });
+    }
+    handleCollapse(e){
+        e.preventDefault();
+        this.setState({
+            collapse: !this.state.collapse
         });
     }
 }

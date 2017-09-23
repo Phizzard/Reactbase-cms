@@ -14,6 +14,11 @@ export default class EditRecord extends Component {
     componentDidMount(){
         this.fetchRecordData();
     }
+    componentDidUpdate(prevProps){
+        if (this.props.match.params.contentId !== prevProps.match.params.contentId){
+            this.fetchRecordData();
+        }
+    }
     fetchRecordData(){
         let fetch = new ContentController();
         fetch.GetRecord(this.props.match.params.contentId)
