@@ -1,5 +1,4 @@
 import * as firebase from 'firebase';
-import update from 'immutability-helper';
 
 export default class Content {
     constructor(dbRef = 'content/'){
