@@ -43,7 +43,7 @@ export default class ContextualInput extends Component {
         let element = e.target;
         this.setState({
             value: element.value
-        }, this.props.updateEditRecordFormState({[element.id]: element.value}));
+        }, this.props.updateEditRecordFormState({[element.id]: {value: element.value}}));
     }
 }
 

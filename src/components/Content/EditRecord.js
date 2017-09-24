@@ -35,7 +35,7 @@ export default class EditRecord extends Component {
                 <Sidebar />
                 <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
                     <h1>Edit {formattedId} Page</h1>
-                    <EditRecordForm data={this.state.data} />
+                    <EditRecordForm data={this.state.data} contentId={this.props.match.params.contentId} />
                 </main>
             </div>
         );

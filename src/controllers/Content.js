@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import update from 'immutability-helper';
 
 export default class Content {
     constructor(dbRef = 'content/'){
@@ -17,5 +18,25 @@ export default class Content {
             let data = snapshot.val();
             return(data);
         });
+    }
+
+    updateRecord(type, input, data){
+        return firebase.database().ref(`${this.dbRef}${type}/${input}`).update(data).catch((error)=>{
+            return {
+                errorCode: error.code,
+                errorMessage: error.message
+            };
+        });
+    }
+
+    updateCollection(type, inputs){
+        for (let input in inputs) {
+            return this.updateRecord(type, input, inputs[input]).catch((error)=>{
+                return {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                };
+            });
+        }
     }
 }

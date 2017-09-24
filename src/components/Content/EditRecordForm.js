@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import ContextualInput from './ContextualInput';
+import ContentController from '../../controllers/Content';
 
 export default class EditRecordForm extends Component {
     constructor(props){
@@ -69,6 +70,24 @@ export default class EditRecordForm extends Component {
     }
     save(e){
         e.preventDefault();
-
+        this.setState({
+            saving: true,
+            isSaved: false
+        });
+        let content = new ContentController();
+        content.updateCollection(this.props.contentId, this.state.toBeSaved).then(()=>{
+            this.setState({
+                saving: false,
+                isSaved: true
+            });
+        }).catch((error)=>{
+            let errorObject = {
+                errorCode: error.code,
+                errorMessage: error.message
+            }
+            this.setState({
+                error: this.state.error.concat(errorObject)
+            });
+        });
     }
 }
