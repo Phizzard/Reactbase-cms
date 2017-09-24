@@ -26,7 +26,7 @@ export default class EditRecordForm extends Component {
     render(){
         return(
             <div className="card">
-                <div className="card-header">
+                <div className="card-header bg-dark text-white">
                     <h5>Edit Content</h5>
                 </div>
                 <div className="card-body">

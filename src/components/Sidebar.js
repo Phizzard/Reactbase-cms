@@ -21,21 +21,6 @@ export default class Sidebar extends Component {
     render(){
         return(
             <nav className="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-                <h4>Configuration</h4>
-              <ul className="nav nav-pills flex-column">
-                <li className="nav-item">
-                  <a className="nav-link" href="">Overview <span className="sr-only">(current)</span></a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="">Reports</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="">Analytics</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="">Export</a>
-                </li>
-              </ul>
               <h4>Your Content</h4>
               <ul className="nav nav-pills flex-column">
                   {this.renderContent()}
@@ -43,6 +28,12 @@ export default class Sidebar extends Component {
               <ul className="nav flex-column">
                   <li className="nav-item">
                       <NavLink className="nav-link btn btn-success" exact to='/content/add'>Add Content Type</NavLink>
+                  </li>
+              </ul>
+              <h4>Configuration</h4>
+              <ul className="nav nav-pills flex-column">
+                  <li className="nav-item">
+                      <a className="nav-link" href="">Settings</a>
                   </li>
               </ul>
             </nav>
