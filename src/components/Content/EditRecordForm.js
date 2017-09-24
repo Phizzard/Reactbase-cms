@@ -87,7 +87,7 @@ export default class EditRecordForm extends Component {
                 isSaved: false
             });
             let content = new ContentController();
-            content.updateCollection(this.props.contentId, this.state.toBeSaved).then(()=>{
+            content.updateCollection(this.props.contentId, this.state.toBeSaved, this.props.recordId || "").then(()=>{
                 this.setState({
                     saving: false,
                     isSaved: true,

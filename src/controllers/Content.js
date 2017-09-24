@@ -19,8 +19,8 @@ export default class Content {
         });
     }
 
-    updateRecord(type, input, data){
-        return firebase.database().ref(`${this.dbRef}${type}/${input}`).update(data).catch((error)=>{
+    updateRecord(type, input, data, itemId=""){
+        return firebase.database().ref(`${this.dbRef}${type}/${itemId && 'items/'+itemId+'/'}${input}`).update(data).catch((error)=>{
             return {
                 errorCode: error.code,
                 errorMessage: error.message
@@ -28,9 +28,9 @@ export default class Content {
         });
     }
 
-    updateCollection(type, inputs){
+    updateCollection(type, inputs, itemId=""){
         for (let input in inputs) {
-            return this.updateRecord(type, input, inputs[input]).catch((error)=>{
+            return this.updateRecord(type, input, inputs[input], itemId).catch((error)=>{
                 return {
                     errorCode: error.code,
                     errorMessage: error.message
