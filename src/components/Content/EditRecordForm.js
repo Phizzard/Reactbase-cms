@@ -14,6 +14,7 @@ export default class EditRecordForm extends Component {
         }
         this.updateToBeSaved = this.updateToBeSaved.bind(this);
         this.save = this.save.bind(this);
+        this.renderFeedback = this.renderFeedback.bind(this);
     }
     componentDidUpdate(prevProps){
         if (this.props !== prevProps){
@@ -55,9 +56,19 @@ export default class EditRecordForm extends Component {
                                 </div>
                             )
                         }
-                        <button type="submit" className="btn btn-primary" onClick={this.save}>Submit</button>
+                        {
+                            this.state.saving ?
+                            (
+                                <button type="submit" className="btn btn-success" disabled >Saving...</button>
+                            )
+                            :
+                            (
+                                <button type="submit" className="btn btn-success" onClick={this.save}>Save</button>
+                            )
+                        }
                     </form>
                 </div>
+                {this.renderFeedback()}
             </div>
         );
     }
@@ -70,24 +81,45 @@ export default class EditRecordForm extends Component {
     }
     save(e){
         e.preventDefault();
-        this.setState({
-            saving: true,
-            isSaved: false
-        });
-        let content = new ContentController();
-        content.updateCollection(this.props.contentId, this.state.toBeSaved).then(()=>{
+        if (Object.keys(this.state.toBeSaved).length > 0){
             this.setState({
-                saving: false,
-                isSaved: true
+                saving: true,
+                isSaved: false
             });
-        }).catch((error)=>{
-            let errorObject = {
-                errorCode: error.code,
-                errorMessage: error.message
-            }
-            this.setState({
-                error: this.state.error.concat(errorObject)
+            let content = new ContentController();
+            content.updateCollection(this.props.contentId, this.state.toBeSaved).then(()=>{
+                this.setState({
+                    saving: false,
+                    isSaved: true,
+                    toBeSaved: {}
+                });
+            }).catch((error)=>{
+                let errorObject = {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+                this.setState({
+                    error: this.state.error.concat(errorObject)
+                });
             });
-        });
+        }
+
+    }
+    renderFeedback(){
+        if (this.state.isSaved){
+            return(
+                <div className="card-footer text-white bg-success">
+                    <span>Save Successful!</span>
+                </div>
+            );
+        } else if (this.state.error.length > 0) {
+            return(
+                <div className="card-footer text-white bg-danger">
+                    <span>Uh oh, Something went horribly wrong!</span>
+                </div>
+            );
+        }
+
+
     }
 }
