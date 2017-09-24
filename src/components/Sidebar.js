@@ -24,7 +24,7 @@ export default class Sidebar extends Component {
                 <h4>Configuration</h4>
               <ul className="nav nav-pills flex-column">
                 <li className="nav-item">
-                  <a className="nav-link active" href="">Overview <span className="sr-only">(current)</span></a>
+                  <a className="nav-link" href="">Overview <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="">Reports</a>
@@ -40,9 +40,11 @@ export default class Sidebar extends Component {
               <ul className="nav nav-pills flex-column">
                   {this.renderContent()}
               </ul>
-              <NavLink exact to='/content/add'>
-                  <button className="btn btn-success">Add Content Type</button>
-              </NavLink>
+              <ul className="nav flex-column">
+                  <li className="nav-item">
+                      <NavLink className="nav-link btn btn-success" exact to='/content/add'>Add Content Type</NavLink>
+                  </li>
+              </ul>
             </nav>
         );
     }
@@ -55,9 +57,7 @@ export default class Sidebar extends Component {
             };
             return(
                 <li className="nav-item" key={item.id}>
-                    <NavLink to={`/content/${item.id}${item.type ==='single' ? ('/edit'):('')}`}>
-                        <span className="nav-link" href="">{item.id}</span>
-                    </NavLink>
+                    <NavLink activeClassName="active" className="nav-link" to={`/content/${item.id}${item.type ==='single' ? ('/edit'):('')}`}>{item.id}</NavLink>
                 </li>
             );
         });
