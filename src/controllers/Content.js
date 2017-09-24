@@ -13,7 +13,7 @@ export default class Content {
     }
 
     GetRecord(type, item=""){
-        return firebase.database().ref(`${this.dbRef}${type}/${item}`).once('value').then((snapshot)=>{
+        return firebase.database().ref(`${this.dbRef}${type}/${item && 'items/'+item}`).once('value').then((snapshot)=>{
             let data = snapshot.val();
             return(data);
         });

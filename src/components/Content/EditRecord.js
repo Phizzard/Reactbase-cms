@@ -21,8 +21,9 @@ export default class EditRecord extends Component {
     }
     fetchRecordData(){
         let fetch = new ContentController();
-        fetch.GetRecord(this.props.match.params.contentId)
+        fetch.GetRecord(this.props.match.params.contentId, this.props.match.params.recordId || "")
             .then((result) =>{
+                console.log(result);
                 this.setState({
                     data: result
                 });
