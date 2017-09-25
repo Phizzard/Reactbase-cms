@@ -53,19 +53,21 @@ export default class ViewContentType extends Component {
         );
     }
     renderContentItems(){
-        return Object.entries(this.state.data).map(([key, item]) =>{
-            return(
-                <tr key={key}>
-                    <td>{key}</td>
-                    <td>SomeDate</td>
-                    <td>SomeDate</td>
-                    <td>
-                        <NavLink to={`/content/${this.props.match.params.contentId}/${key}/edit`}>
-                            <button className="btn btn-sm btn-info">Edit</button>
-                        </NavLink>
-                    </td>
-                </tr>
-            );
-        });
+        if(Object.entries(this.state.data).length > 0 || this.state.data !== null){
+            return Object.entries(this.state.data).map(([key, item]) =>{
+                return(
+                    <tr key={key}>
+                        <td>{key}</td>
+                        <td>SomeDate</td>
+                        <td>SomeDate</td>
+                        <td>
+                            <NavLink to={`/content/${this.props.match.params.contentId}/${key}/edit`}>
+                                <button className="btn btn-sm btn-info">Edit</button>
+                            </NavLink>
+                        </td>
+                    </tr>
+                );
+            });
+        }
     }
 }

@@ -19,6 +19,15 @@ export default class Content {
         });
     }
 
+    CreateType(newType){
+        return firebase.database().ref(`${this.dbRef}`).update(newType).catch((error)=>{
+            return{
+                errorCode: error.code,
+                errorMessage: error.message
+            };
+        });
+    }
+
     updateRecord(type, input, data, itemId=""){
         return firebase.database().ref(`${this.dbRef}${type}/${itemId && 'items/'+itemId+'/'}${input}`).update(data).catch((error)=>{
             return {
