@@ -12,7 +12,7 @@ export default class Authentication {
         ;
     }
 
-    signUp(email, password){
+    SignUp(email, password){
         firebase.auth().createUserWithEmailAndPassword(email, password).catch((error)=>{
             return {
                 errorCode: error.code,
