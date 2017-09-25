@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import ContextualInput from './ContextualInput';
+import { NavLink } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
 
 export default class EditRecordForm extends Component {
@@ -27,7 +28,8 @@ export default class EditRecordForm extends Component {
         return(
             <div className="card">
                 <div className="card-header bg-dark text-white">
-                    <h5>Edit Content</h5>
+                    <h5 className="float-left">Edit Content</h5>
+                    <NavLink className="btn btn-success float-right" to={`/content/${this.props.contentId}/edit/template`}>{`Update ${this.props.formattedId} template`}</NavLink>
                 </div>
                 <div className="card-body">
                     <form>

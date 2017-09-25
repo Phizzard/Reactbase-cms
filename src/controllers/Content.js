@@ -6,14 +6,14 @@ export default class Content {
     }
 
     List(){
-        return firebase.database().ref(`${this.dbRef}`).once('value').then((snapshot)=>{
+        return firebase.database().ref(`${this.dbRef}`).orderByKey().once('value').then((snapshot)=>{
             let data = snapshot.val();
             return(data);
         });
     }
 
     GetRecord(type, item=""){
-        return firebase.database().ref(`${this.dbRef}${type}/${item && 'items/'+item}`).once('value').then((snapshot)=>{
+        return firebase.database().ref(`${this.dbRef}${type}/${item && 'items/'+item}`).orderByKey().once('value').then((snapshot)=>{
             let data = snapshot.val();
             return(data);
         });

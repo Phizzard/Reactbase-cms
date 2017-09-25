@@ -8,6 +8,7 @@ import Login from './components/Login';
 import AddContentType from './components/Content/AddType';
 import ViewContentType from './components/Content/ViewType';
 import EditRecord from './components/Content/EditRecord';
+import EditTemplate from './components/Template/Edit';
 import './App.css';
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
                         <Switch>
                             <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/add`} component={AddContentType} />
+                            <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/edit/template`} component={EditTemplate} />
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/:recordId?/edit`} component={EditRecord} />
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId`} component={ViewContentType} />
                             <PublicOnlyRoute authed={this.state.authed} path='/login' component={Login} />

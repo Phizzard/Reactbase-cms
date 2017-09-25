@@ -7,8 +7,7 @@ export default class ContextualInput extends Component {
             id: '',
             input: '',
             label: '',
-            value: '',
-            placeholder: ''
+            value: ''
         }
 
         this.handleInput = this.handleInput.bind(this);
@@ -27,14 +26,15 @@ export default class ContextualInput extends Component {
     }
     render(){
         return(
-            <div className="form-group">
+            <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
                 <label htmlFor={this.props.id}>{this.props.label}</label>
                 <input  type={this.props.type}
                         className="form-control"
                         id={this.props.id}
-                        placeholder={this.props.placeholder}
                         value={this.state.value}
-                        onChange={this.handleInput} />
+                        onChange={this.handleInput}
+                        disabled={this.props.isTemplate}
+                />
             </div>
         );
     }
@@ -53,6 +53,6 @@ ContextualInput.defaultProps = {
     value: '',
     id: 'InputId',
     type: 'text',
-    placeholder: 'Enter here...'
+    isTemplate: false
 
 };

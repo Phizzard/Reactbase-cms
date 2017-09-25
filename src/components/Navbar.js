@@ -28,12 +28,12 @@ export default class Navbar extends Component {
 
                 <div className={`${this.state.collapse && ('collapse')} navbar-collapse`} id="navbarsExampleDefault">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
+                        {/*<li className="nav-item active">
                             <a className="nav-link" href="">Home <span className="sr-only">(current)</span></a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="">Settings</a>
-                        </li>
+                        </li>*/}
                     </ul>
                     <form className="form-inline mt-2 mt-md-0">
                         <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
