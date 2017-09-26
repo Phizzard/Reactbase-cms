@@ -38,13 +38,15 @@ export default class Content {
     }
 
     UpdateCollection(type, inputs, itemId=""){
-        for (let input in inputs) {
-            return this.UpdateRecord(type, input, inputs[input], itemId).catch((error)=>{
+        let collectionPromise = [];
+        collectionPromise.push(Object.entries(inputs).map(([key, value]) =>{
+            return this.UpdateRecord(type, key, value, itemId).catch((error)=>{
                 return {
                     errorCode: error.code,
                     errorMessage: error.message
                 };
             });
-        }
+        }));
+        return Promise.all(collectionPromise);
     }
 }
