@@ -4,18 +4,20 @@ import ContextualInput from './ContextualInput';
 import { NavLink } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
 
-export default class EditRecordForm extends Component {
+export default class RecordForm extends Component {
     constructor(props){
         super(props);
         this.state = {
             saving: false,
             isSaved: false,
             error: [],
-            toBeSaved: {}
+            toBeSaved: {},
+            recordId: ""
         }
         this.updateToBeSaved = this.updateToBeSaved.bind(this);
         this.save = this.save.bind(this);
         this.renderFeedback = this.renderFeedback.bind(this);
+        this.updateRecordId = this.updateRecordId.bind(this);
     }
     componentDidUpdate(prevProps){
         if (this.props !== prevProps){
@@ -25,14 +27,20 @@ export default class EditRecordForm extends Component {
         }
     }
     render(){
+        let formTitle = this.props.edit ? "Edit Content" : "Add New Content",
+            editTemplate = this.props.edit && <NavLink className="btn btn-info float-right" to={`/content/${this.props.contentId}/edit/template`}>{`Update ${this.props.formattedId} Template`}</NavLink>,
+            idInput = !this.props.edit && <ContextualInput key="recordId" label="ID" id="recordId" updateRecordFormState={this.updateRecordId} value={this.state.recordId}
+            />
+        ;
         return(
             <div className="card">
                 <div className="card-header bg-dark text-white">
-                    <h5 className="float-left">Edit Content</h5>
-                    <NavLink className="btn btn-success float-right" to={`/content/${this.props.contentId}/edit/template`}>{`Update ${this.props.formattedId} template`}</NavLink>
+                    <h5 className="float-left">{formTitle}</h5>
+                    {editTemplate}
                 </div>
                 <div className="card-body">
                     <form>
+                        {idInput}
                         {
                             Object.entries(this.props.data).length > 0 ?
                             (
@@ -44,17 +52,17 @@ export default class EditRecordForm extends Component {
                                         <ContextualInput
                                             key={key}
                                             label={item.label}
-                                            value={item.value}
                                             id={key}
-                                            updateEditRecordFormState={this.updateToBeSaved}
+                                            updateRecordFormState={this.updateToBeSaved}
+                                            value={this.props.edit ? item.value : undefined}
                                          />
                                     )
                                 })
                             )
                             :
                             (
-                                <div>
-                                    No Input fields created
+                                <div className="alert alert-info" role="alert">
+                                  No Template Created, <NavLink to={`/content/${this.props.contentId}/edit/template`} className="btn btn-info">{`Lets go create a template for ${this.props.formattedId}`}</NavLink>
                                 </div>
                             )
                         }
@@ -81,6 +89,11 @@ export default class EditRecordForm extends Component {
             toBeSaved: nextToBeSaved
         });
     }
+    updateRecordId(input){
+        this.setState({
+            recordId: input.recordId.value
+        });
+    }
     save(e){
         e.preventDefault();
         if (Object.keys(this.state.toBeSaved).length > 0){
@@ -89,7 +102,7 @@ export default class EditRecordForm extends Component {
                 isSaved: false
             });
             let content = new ContentController();
-            content.UpdateCollection(this.props.contentId, this.state.toBeSaved, this.props.recordId || "").then(()=>{
+            content.UpdateCollection(this.props.contentId, this.state.toBeSaved, this.props.edit ? this.props.recordId || "" : this.state.recordId).then(()=>{
                 this.setState({
                     saving: false,
                     isSaved: true,
@@ -124,4 +137,12 @@ export default class EditRecordForm extends Component {
 
 
     }
+}
+
+RecordForm.defaultProps = {
+    formattedId : "",
+    data: {},
+    contentId : "",
+    recordId: "",
+    edit: false
 }

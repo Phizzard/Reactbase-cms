@@ -8,6 +8,7 @@ import Login from './components/Login';
 import AddContentType from './components/Content/AddType';
 import ViewContentType from './components/Content/ViewType';
 import EditRecord from './components/Content/EditRecord';
+import NewRecord from './components/Content/NewRecord';
 import EditTemplate from './components/Template/Edit';
 import './App.css';
 
@@ -40,6 +41,7 @@ class App extends Component {
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/add`} component={AddContentType} />
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/edit/template`} component={EditTemplate} />
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/:recordId?/edit`} component={EditRecord} />
+                            <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/add`} component={NewRecord} />
                             <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId`} component={ViewContentType} />
                             <PublicOnlyRoute authed={this.state.authed} path='/login' component={Login} />
                             <Route render={function(){

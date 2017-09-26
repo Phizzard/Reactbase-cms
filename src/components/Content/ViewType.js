@@ -41,7 +41,7 @@ export default class ViewContentType extends Component {
                           <th>Name</th>
                           <th>Last Updated</th>
                           <th>Created On</th>
-                          <th><NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} className="btn btn-success float-right">{`Update ${formattedId} template`}</NavLink></th>
+                          <th><NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} className="btn btn-info float-right">{`Update ${formattedId} Template`}</NavLink><NavLink to={`/content/${this.props.match.params.contentId}/add`} className="btn btn-success float-right">{`Add New ${formattedId} Entry`}</NavLink></th>
                         </tr>
                       </thead>
                       <tbody>

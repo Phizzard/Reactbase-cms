@@ -46,7 +46,7 @@ export default class EditTemplate extends Component {
                                             key={key}
                                             label={item.label}
                                             id={key}
-                                            updateEditRecordFormState={this.updateToBeSaved}
+                                            updateRecordFormState={this.updateToBeSaved}
                                             isTemplate={true}
                                          />
                                     )
