@@ -83,6 +83,13 @@ export default class RecordForm extends Component {
         );
     }
     updateToBeSaved(input){
+        let inputKey = Object.keys(input)[0];
+        console.log(this.props.data[inputKey]);
+        if(!this.props.edit){
+            input[inputKey]["label"] = this.props.data[inputKey].label;
+            input[inputKey]["input"] = this.props.data[inputKey].input;
+        }
+        console.log(input);
         let prevToBeSaved = this.state.toBeSaved,
             nextToBeSaved = update(prevToBeSaved, {$merge: input});
         this.setState({
