@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import Sidebar from '../Sidebar';
 import ContentController from '../../controllers/Content';
 
@@ -10,6 +11,7 @@ export default class AddContentType extends Component {
             multiple: false,
             newContentType: "",
             type: "",
+            redirect: false
         };
 
         this.handleRadio = this.handleRadio.bind(this);
@@ -18,6 +20,10 @@ export default class AddContentType extends Component {
     }
 
     render(){
+        const redirect = this.state.redirect;
+        if(redirect){
+            return <Redirect to="/" />;
+        }
         let disabled = true;
         !this.state.newContentType || !this.state.type ? disabled = true : disabled = false;
         return(
@@ -91,7 +97,11 @@ export default class AddContentType extends Component {
                     }
                 }
             }
-            content.CreateType(contentModel).catch((error)=>{
+            content.CreateType(contentModel).then(()=>{
+                this.setState({
+                    redirect: true
+                });
+            }).catch((error)=>{
                 return {
                     errorCode: error.code,
                     errorMessage: error.message

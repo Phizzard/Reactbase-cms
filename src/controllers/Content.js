@@ -49,4 +49,13 @@ export default class Content {
         }));
         return Promise.all(collectionPromise);
     }
+
+    DeleteRecord(type, itemId=""){
+        return firebase.database().ref(`${this.dbRef}${type}/${itemId && 'items/'+itemId+'/'}`).remove().catch((error)=>{
+            return {
+                errorCode: error.code,
+                errorMessage: error.message
+            };
+        });
+    }
 }

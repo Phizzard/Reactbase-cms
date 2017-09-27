@@ -10,6 +10,7 @@ export default class ViewContentType extends Component {
             data: {}
         };
         this.fetchRecords = this.fetchRecords.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
     componentDidMount(){
         this.fetchRecords();
@@ -34,7 +35,6 @@ export default class ViewContentType extends Component {
             <div className="row">
                 <Sidebar />
                 <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-                    <h1>{formattedId}</h1>
                     <table className="table table-hover">
                       <thead className="thead-inverse">
                         <tr>
@@ -61,13 +61,20 @@ export default class ViewContentType extends Component {
                         <td>SomeDate</td>
                         <td>SomeDate</td>
                         <td>
-                            <NavLink to={`/content/${this.props.match.params.contentId}/${key}/edit`}>
-                                <button className="btn btn-sm btn-info">Edit</button>
-                            </NavLink>
+                            <NavLink className="btn btn-sm btn-info" to={`/content/${this.props.match.params.contentId}/${key}/edit`}>Edit</NavLink>
+                            <button id={key} className="btn btn-sm btn-danger" onClick={this.handleDelete}>Delete</button>
                         </td>
                     </tr>
                 );
             });
         }
+    }
+    handleDelete(e){
+        e.preventDefault();
+        let element = e.target,
+            record = new ContentController();
+        record.DeleteRecord(this.props.match.params.contentId, element.id || "" ).then(result=>{
+            this.fetchRecords();
+        });
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import ContextualInput from './ContextualInput';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
 
 export default class RecordForm extends Component {
@@ -12,10 +12,12 @@ export default class RecordForm extends Component {
             isSaved: false,
             error: [],
             toBeSaved: {},
-            recordId: ""
+            recordId: "",
+            redirect: false
         }
         this.updateToBeSaved = this.updateToBeSaved.bind(this);
         this.save = this.save.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.renderFeedback = this.renderFeedback.bind(this);
         this.updateRecordId = this.updateRecordId.bind(this);
     }
@@ -27,16 +29,21 @@ export default class RecordForm extends Component {
         }
     }
     render(){
+        const redirect = this.state.redirect;
+        if(redirect){
+            return <Redirect to="/" />;
+        }
         let formTitle = this.props.edit ? "Edit Content" : "Add New Content",
+            deleteRecord = this.props.edit && <button className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>,
             editTemplate = this.props.edit && <NavLink className="btn btn-info float-right" to={`/content/${this.props.contentId}/edit/template`}>{`Update ${this.props.formattedId} Template`}</NavLink>,
-            idInput = !this.props.edit && <ContextualInput key="recordId" label="ID" id="recordId" updateRecordFormState={this.updateRecordId} value={this.state.recordId}
-            />
+            idInput = !this.props.edit && <ContextualInput key="recordId" label="ID" id="recordId" updateRecordFormState={this.updateRecordId} value={this.state.recordId}/>
         ;
         return(
             <div className="card">
                 <div className="card-header bg-dark text-white">
                     <h5 className="float-left">{formTitle}</h5>
                     {editTemplate}
+                    {deleteRecord}
                 </div>
                 <div className="card-body">
                     <form>
@@ -126,6 +133,15 @@ export default class RecordForm extends Component {
             });
         }
 
+    }
+    handleDelete(e){
+        e.preventDefault();
+        let content = new ContentController();
+        content.DeleteRecord(this.props.contentId).then(()=>{
+            this.setState({
+                redirect: true
+            });
+        });
     }
     renderFeedback(){
         if (this.state.isSaved){
