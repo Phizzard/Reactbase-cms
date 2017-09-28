@@ -80,7 +80,7 @@ export default class ContextualInput extends Component {
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
                         <p>{this.props.label}</p>
-                        <button id={this.props.id} className={`btn btn-small ${ this.state.value ? 'btn-success' : 'btn-danger'}`} onClick={this.handleToggle}>{this.state.value.toString()}</button>
+                        <button disabled={this.props.isTemplate} id={this.props.id} className={`btn btn-small ${ this.state.value ? 'btn-success' : 'btn-danger'}`} onClick={this.handleToggle}>{this.state.value.toString() || 'True / False'}</button>
                     </div>
                 );
                 break;
