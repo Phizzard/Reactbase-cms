@@ -59,6 +59,7 @@ export default class RecordForm extends Component {
                                         <ContextualInput
                                             key={key}
                                             label={item.label}
+                                            input={item.input}
                                             id={key}
                                             updateRecordFormState={this.updateToBeSaved}
                                             value={this.props.edit ? item.value : undefined}

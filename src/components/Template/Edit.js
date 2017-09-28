@@ -45,6 +45,7 @@ export default class EditTemplate extends Component {
                                         <ContextualInput
                                             key={key}
                                             label={item.label}
+                                            input={item.input}
                                             id={key}
                                             updateRecordFormState={this.updateToBeSaved}
                                             isTemplate={true}
