@@ -34,7 +34,7 @@ export default class RecordForm extends Component {
             return <Redirect to="/" />;
         }
         let formTitle = this.props.edit ? "Edit Content" : "Add New Content",
-            deleteRecord = this.props.edit && <button className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>,
+            deleteRecord = this.props.edit && !this.props.recordId && <button className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>,
             editTemplate = this.props.edit && <NavLink className="btn btn-info float-right" to={`/content/${this.props.contentId}/edit/template`}>{`Update ${this.props.formattedId} Template`}</NavLink>,
             idInput = !this.props.edit && <ContextualInput key="recordId" label="ID" id="recordId" updateRecordFormState={this.updateRecordId} value={this.state.recordId}/>
         ;

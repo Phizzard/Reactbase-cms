@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Sidebar from '../Sidebar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
 
 export default class ViewContentType extends Component {
     constructor(props){
         super(props);
         this.state = {
-            data: {}
+            data: {},
+            redirect: false
         };
         this.fetchRecords = this.fetchRecords.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
@@ -21,15 +22,22 @@ export default class ViewContentType extends Component {
         }
     }
     fetchRecords(){
-        let fetch = new ContentController();
-        fetch.GetRecord(this.props.match.params.contentId)
-            .then((result) =>{
-                this.setState({
-                    data: result.items
-                });
-            });
-    };
+        if(!this.state.redirect){
+            let fetch = new ContentController();
+            fetch.GetRecord(this.props.match.params.contentId)
+                .then((result) =>{
+                    this.setState({
+                        data: result.items
+                    });
+                })
+            ;
+        }
+    }
     render(){
+        const redirect = this.state.redirect;
+        if (redirect){
+            return <Redirect to="/" />;
+        }
         let formattedId = `${this.props.match.params.contentId.charAt().toUpperCase()}${this.props.match.params.contentId.substr(1).toLowerCase()}`;
         return(
             <div className="row">
@@ -41,7 +49,11 @@ export default class ViewContentType extends Component {
                           <th>Name</th>
                           <th>Last Updated</th>
                           <th>Created On</th>
-                          <th><NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} className="btn btn-info float-right">{`Update ${formattedId} Template`}</NavLink><NavLink to={`/content/${this.props.match.params.contentId}/add`} className="btn btn-success float-right">{`Add New ${formattedId} Entry`}</NavLink></th>
+                          <th>
+                              <NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} className="btn btn-info float-right">{`Update ${formattedId} Template`}</NavLink>
+                              <NavLink to={`/content/${this.props.match.params.contentId}/add`} className="btn btn-success float-right">{`Add New ${formattedId} Entry`}</NavLink>
+                              <button className="btn btn-danger float-right" onClick={this.handleDelete}>{`Delete ${formattedId} Type`}</button>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -74,7 +86,14 @@ export default class ViewContentType extends Component {
         let element = e.target,
             record = new ContentController();
         record.DeleteRecord(this.props.match.params.contentId, element.id || "" ).then(result=>{
-            this.fetchRecords();
+            if (element.id){
+                this.fetchRecords();
+            } else {
+                this.setState({
+                    redirect: true
+                });
+            }
+
         });
     }
 }
