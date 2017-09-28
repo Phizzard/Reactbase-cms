@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Checkbox from 'react-checkbox';
 
 export default class ContextualInput extends Component {
     constructor(props){
