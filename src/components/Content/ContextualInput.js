@@ -60,7 +60,7 @@ export default class ContextualInput extends Component {
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
                         <label htmlFor={this.props.id}>{this.props.label}</label>
                         <div className="input-group">
-                            <span className="input-group-addon">$</span>
+                            <span className="input-group-addon"><i className="material-icons">attach_money</i></span>
                             <input  type="number"
                                     step="any"
                                     className="form-control"

@@ -1,0 +1,28 @@
+{
+    "Text": {
+        "shortText": {
+            "icon": "short_text",
+            "title": "Short Text"
+        },
+        "longText": {
+            "icon": "subject",
+            "title": "Multiline Text"
+        }
+    },
+    "Basic": {
+        "number": {
+            "icon": "format_list_numbered",
+            "title": "Number"
+        },
+        "checkbox": {
+            "icon": "check_box",
+            "title": "Checkbox"
+        }
+    },
+    "Specific": {
+        "currency": {
+            "icon": "monetization_on",
+            "title": "Currency"
+        }
+    }
+}

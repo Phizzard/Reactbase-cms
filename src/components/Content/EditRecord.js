@@ -30,7 +30,7 @@ export default class EditRecord extends Component {
             });
     }
     render(){
-        let formattedId = utl.capitalize(this.props.match.params.recordId);
+        let formattedId = utl.capitalize(this.props.match.params.contentId);
         return(
             <div className="row">
                 <Sidebar />
