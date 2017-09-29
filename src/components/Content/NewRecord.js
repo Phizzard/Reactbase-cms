@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Sidebar from '../Sidebar';
 import RecordForm from './RecordForm';
 import ContentController from '../../controllers/Content';
+import utl from '../../utl/StringFormatting';
 
 export default class EditRecord extends Component {
     constructor(props){
@@ -33,7 +34,7 @@ export default class EditRecord extends Component {
             });
     }
     render(){
-        let formattedId = `${this.props.match.params.contentId.charAt().toUpperCase()}${this.props.match.params.contentId.substr(1).toLowerCase()}`;
+        let formattedId = utl.capitalize(this.props.match.params.contentId);
         return(
             <div className="row">
                 <Sidebar />

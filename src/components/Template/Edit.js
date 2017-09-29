@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ContentController from '../../controllers/Content';
 import InputPicker from './InputPicker';
 import ContextualInput from '../Content/ContextualInput';
+import utl from '../../utl/StringFormatting.js';
 
 export default class EditTemplate extends Component {
     constructor(props){
@@ -33,6 +34,7 @@ export default class EditTemplate extends Component {
             <div className="row">
                 <InputPicker />
                 <main className="col-sm-8 ml-sm-auto col-md-9 pt-3" role="main">
+                    <h2>Edit {utl.capitalize(this.props.match.params.contentId)}</h2>
                     <form>
                         {
                             Object.entries(this.state.inputs).length > 0 ?

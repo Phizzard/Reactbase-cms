@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Sidebar from '../Sidebar';
 import { NavLink, Redirect } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
+import utl from '../../utl/StringFormatting';
 
 export default class ViewContentType extends Component {
     constructor(props){
@@ -38,7 +39,7 @@ export default class ViewContentType extends Component {
         if (redirect){
             return <Redirect to="/" />;
         }
-        let formattedId = `${this.props.match.params.contentId.charAt().toUpperCase()}${this.props.match.params.contentId.substr(1).toLowerCase()}`;
+        let formattedId = utl.capitalize(this.props.match.params.contentId);
         return(
             <div className="row">
                 <Sidebar />
