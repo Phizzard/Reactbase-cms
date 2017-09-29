@@ -6,7 +6,7 @@ export default class InputGroup extends Component {
         return(
             <div className="container">
                 <h5>{this.props.title}</h5>
-                <div className="row text-center">
+                <div className="row text-center justify-center">
                     {
                         Object.entries(this.props.group).map(([key, type])=>{
                             return <InputType

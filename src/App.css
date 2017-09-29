@@ -113,3 +113,13 @@ h1 {
     padding: .8rem 0;
     margin: 0;
 }
+
+.input-selector{
+    margin: auto;
+    border-radius: 2rem;
+}
+
+.input-selector:hover{
+    cursor: pointer;
+    background-color: #5d676f;
+}
