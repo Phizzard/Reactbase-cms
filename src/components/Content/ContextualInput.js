@@ -41,7 +41,6 @@ export default class ContextualInput extends Component {
                         />
                     </div>
                 );
-                break;
             case 'number':
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
@@ -56,7 +55,6 @@ export default class ContextualInput extends Component {
                         />
                     </div>
                 );
-                break;
             case 'currency':
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
@@ -74,7 +72,6 @@ export default class ContextualInput extends Component {
                         </div>
                     </div>
                 );
-                break;
             case 'checkbox':
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
@@ -82,7 +79,6 @@ export default class ContextualInput extends Component {
                         <button disabled={this.props.isTemplate} id={this.props.id} className={`btn btn-small ${ this.state.value ? 'btn-success' : 'btn-danger'}`} onClick={this.handleToggle}>{this.state.value.toString() || 'True / False'}</button>
                     </div>
                 );
-                break;
             default:
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
