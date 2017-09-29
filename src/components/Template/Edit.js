@@ -19,7 +19,7 @@ export default class EditTemplate extends Component {
         fetch.GetRecord(this.props.match.params.contentId)
             .then((result) =>{
                 this.setState({
-                    inputs: result,
+                    inputs: result.type === 'single' ? result : result.items[Object.keys(result.items)[0]],
                     saving: false,
                     isSaved: false,
                     error: [],
