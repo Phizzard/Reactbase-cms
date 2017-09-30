@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
-import Sidebar from '../Sidebar';
 import ContentController from '../../controllers/Content';
 
 export default class AddContentType extends Component {
@@ -28,8 +27,7 @@ export default class AddContentType extends Component {
         !this.state.newContentType || !this.state.type ? disabled = true : disabled = false;
         return(
             <div className="row">
-                <Sidebar />
-                <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+                <main className="col-12 ml-sm-auto" role="main">
                     <h1>Add New Content Type</h1>
                     <form>
                         <div className="form-group">
