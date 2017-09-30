@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Sidebar from '../Sidebar';
 import { NavLink, Redirect } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
 import utl from '../../utl/StringFormatting';
@@ -42,8 +41,8 @@ export default class ViewContentType extends Component {
         let formattedId = utl.capitalize(this.props.match.params.contentId);
         return(
             <div className="row">
-                <Sidebar />
-                <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+                <main className="col-12" role="main">
+                    <h1>View {formattedId} </h1>
                     <table className="table table-hover">
                       <thead className="thead-inverse">
                         <tr>

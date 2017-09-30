@@ -37,7 +37,10 @@ export default class Navbar extends Component {
                 options = '?s=40&d=mm'
         ;
         return(
-            <AppBar title="Reactbase" iconElementRight={this.props.user && <UserNav image={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />} />
+            <AppBar onLeftIconButtonTouchTap={this.toggleSideBar.bind(this)} title="Reactbase" iconElementRight={this.props.user && <UserNav image={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />} />
         );
+    }
+    toggleSideBar(e){
+        this.props.toggleSideBar();
     }
 }

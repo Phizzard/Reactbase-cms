@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Sidebar from '../Sidebar';
 import RecordForm from './RecordForm';
 import ContentController from '../../controllers/Content';
 import utl from '../../utl/StringFormatting';
@@ -37,8 +36,7 @@ export default class EditRecord extends Component {
         let formattedId = utl.capitalize(this.props.match.params.contentId);
         return(
             <div className="row">
-                <Sidebar />
-                <main className="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+                <main className="col-12" role="main">
                     <h1>Add New {formattedId} </h1>
                     <RecordForm formattedId={formattedId} data={this.state.data} contentId={this.props.match.params.contentId} recordId={this.props.match.params.recordId} />
                 </main>

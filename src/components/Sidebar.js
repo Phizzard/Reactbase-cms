@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {MenuItem, Drawer, Divider, FloatingActionButton} from 'material-ui';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import { NavLink } from 'react-router-dom';
 import ContentController from '../controllers/Content';
+import utl from '../utl/StringFormatting';
 
 export default class Sidebar extends Component {
     constructor(props){
@@ -19,24 +22,25 @@ export default class Sidebar extends Component {
         });
     }
     render(){
+        const drawerStyle = {
+            top: '4rem'
+        },
+            addStlye ={
+                position: 'fixed',
+                top: '.1rem',
+                right: '1rem'
+            };
         return(
-            <nav className="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-              <h4>Your Content</h4>
-              <ul className="nav nav-pills flex-column">
-                  {this.renderContent()}
-              </ul>
-              <ul className="nav flex-column">
-                  <li className="nav-item">
-                      <NavLink className="nav-link btn btn-success" exact to='/content/add'>Add Content Type</NavLink>
-                  </li>
-              </ul>
-              <h4>Configuration</h4>
-              <ul className="nav nav-pills flex-column">
-                  <li className="nav-item">
-                      <a className="nav-link" href="">Settings</a>
-                  </li>
-              </ul>
-            </nav>
+            <Drawer containerStyle={drawerStyle} open={this.props.open}>
+                <h4 className="nav-link">Your Content</h4>
+                <NavLink exact to='/content/add'>
+                    <FloatingActionButton mini={true} style={addStlye}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </NavLink>
+                <Divider />
+                {this.renderContent()}
+            </Drawer>
         );
     }
     renderContent(){
@@ -47,9 +51,9 @@ export default class Sidebar extends Component {
                 type: _item[1].type
             };
             return(
-                <li className="nav-item" key={item.id}>
-                    <NavLink activeClassName="active" className="nav-link" to={`/content/${item.id}${item.type ==='single' ? ('/edit'):('')}`}>{item.id}</NavLink>
-                </li>
+                <MenuItem key={item.id}>
+                    <NavLink activeClassName="active" className="nav-link" to={`/content/${item.id}${item.type ==='single' ? ('/edit'):('')}`}>{utl.capitalize(item.id)}</NavLink>
+                </MenuItem>
             );
         });
     }

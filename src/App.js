@@ -4,6 +4,7 @@ import * as firebase from 'firebase';
 import config from './firebase.json';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Index from './components/Index';
 import Login from './components/Login';
 import AddContentType from './components/Content/AddType';
@@ -18,8 +19,10 @@ class App extends Component {
         super(props);
         this.state = {
             user: null,
-            authed: false
+            authed: false,
+            openSidebar: true
         };
+        this.toggleSideBar = this.toggleSideBar.bind(this);
     }
     componentWillMount(){
         firebase.initializeApp(config);
@@ -36,25 +39,34 @@ class App extends Component {
             <MuiThemeProvider>
                 <BrowserRouter>
                     <div>
-                        <Navbar user={this.state.user} />
+                        <Navbar toggleSideBar={this.toggleSideBar} user={this.state.user} />
                         <div className="container-fluid">
-                            <Switch>
-                                <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
-                                <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/add`} component={AddContentType} />
-                                <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/edit/template`} component={EditTemplate} />
-                                <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/:recordId?/edit`} component={EditRecord} />
-                                <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/add`} component={NewRecord} />
-                                <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId`} component={ViewContentType} />
-                                <PublicOnlyRoute authed={this.state.authed} path='/login' component={Login} />
-                                <Route render={function(){
-                                    return <h2>404 Not Found</h2>
-                                }} />
-                            </Switch>
+                            <Sidebar open={this.state.openSidebar} />
+                            <div className={`main ${this.state.openSidebar ? 'col-10': 'col-12'} ml-auto`}>
+                                <Switch>
+                                    <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
+                                    <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/add`} component={AddContentType} />
+                                    <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/edit/template`} component={EditTemplate} />
+                                    <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/:recordId?/edit`} component={EditRecord} />
+                                    <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId/add`} component={NewRecord} />
+                                    <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/:contentId`} component={ViewContentType} />
+                                    <PublicOnlyRoute authed={this.state.authed} path='/login' component={Login} />
+                                    <Route render={function(){
+                                        return <h2>404 Not Found</h2>
+                                    }} />
+                                </Switch>
+                            </div>
+
                         </div>
                     </div>
                 </BrowserRouter>
             </MuiThemeProvider>
         );
+    }
+    toggleSideBar(){
+        this.setState({
+            openSidebar: !this.state.openSidebar
+        });
     }
 }
 
