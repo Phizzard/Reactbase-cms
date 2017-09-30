@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {AppBar, Avatar, MenuItem, IconMenu, IconButton} from 'material-ui';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import { NavLink } from 'react-router-dom';
 import hash from 'md5';
 import Authentication from '../controllers/Authentication';
 
