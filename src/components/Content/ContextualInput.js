@@ -104,7 +104,6 @@ export default class ContextualInput extends Component {
     handleToggle(e){
         e.preventDefault();
         let element = e.target;
-        console.log(this.state.value);
         this.setState({
             value: !this.state.value
         }, this.props.updateRecordFormState(({[element.id]: {value: !this.state.value}})));
