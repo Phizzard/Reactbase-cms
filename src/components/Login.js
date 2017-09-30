@@ -1,32 +1,40 @@
 import React, { Component } from 'react';
 import Authentication from '../controllers/Authentication';
+import {Card, CardActions, CardTitle, TextField, RaisedButton } from 'material-ui';
 
 export default class Login extends Component {
     render(){
+        const inputStyle = {
+                display: 'block'
+            }
+        ;
         return(
             <div className="row justify-content-center login-panel">
-                <div className="card">
-                    <div className="card-body">
+                <Card>
+                    <CardTitle title="Sign In" />
+                    <CardActions>
                         <form>
-                            <div className="form-group">
-                                <label htmlFor="Email">Email address</label>
-                                <input type="email" className="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email" />
-                                <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-                          </div>
-                          <div className="form-group">
-                            <label htmlFor="Password">Password</label>
-                            <input type="password" className="form-control" id="Password" placeholder="Password" />
-                          </div>
-                          <button type="submit" className="btn btn-primary" onClick={this.handleLogIn}>Submit</button>
+                            <TextField
+                                style={inputStyle}
+                                id="Email"
+                                type="email"
+                                floatingLabelText="Email Address"
+                            />
+                            <TextField
+                                style={inputStyle}
+                                id="Password"
+                                type="password"
+                                floatingLabelText="Password"
+                            />
+                            <RaisedButton type="submit" label="Sign In" primary={true} onClick={this.handleLogIn} />
                         </form>
-                    </div>
-                </div>
+                    </CardActions>
+                </Card>
             </div>
         );
     }
     handleLogIn(e){
         e.preventDefault();
-
         let email = document.getElementById('Email').value,
             password = document.getElementById('Password').value,
             auth = new Authentication();
