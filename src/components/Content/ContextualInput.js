@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {TextField, Toggle} from 'material-ui';
 
 export default class ContextualInput extends Component {
     constructor(props){
@@ -26,69 +27,76 @@ export default class ContextualInput extends Component {
         }
     }
     render(){
+        const inputStyle = {
+                display: 'block'
+            }
+        ;
         switch(this.props.input){
             case 'longText':
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
-                        <label htmlFor={this.props.id}>{this.props.label}</label>
-                        <textarea  type="text"
-                                className="form-control"
-                                id={this.props.id}
-                                value={this.state.value}
-                                onChange={this.handleInput}
-                                disabled={this.props.isTemplate}
-                                rows = "4"
+                        <TextField
+                            multiLine={true}
+                            rows={4}
+                            floatingLabelText={this.props.label}
+                            id={this.props.id}
+                            value={this.state.value}
+                            onChange={this.handleInput}
+                            disabled={this.props.isTemplate}
                         />
                     </div>
                 );
             case 'number':
                 return(
-                    <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
-                        <label htmlFor={this.props.id}>{this.props.label}</label>
-                        <input  type="number"
-                                step="any"
-                                className="form-control"
-                                id={this.props.id}
-                                value={this.state.value}
-                                onChange={this.handleInput}
-                                disabled={this.props.isTemplate}
+                    <div className={`${this.props.isTemplate && 'isTemplateInput'}`}>
+                        <TextField
+                            type="number"
+                            step="any"
+                            floatingLabelText={this.props.label}
+                            id={this.props.id}
+                            value={this.state.value}
+                            onChange={this.handleInput}
+                            disabled={this.props.isTemplate}
                         />
                     </div>
                 );
             case 'currency':
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
-                        <label htmlFor={this.props.id}>{this.props.label}</label>
-                        <div className="input-group">
-                            <span className="input-group-addon"><i className="material-icons">attach_money</i></span>
-                            <input  type="number"
-                                    step="any"
-                                    className="form-control"
-                                    id={this.props.id}
-                                    value={this.state.value}
-                                    onChange={this.handleInput}
-                                    disabled={this.props.isTemplate}
-                            />
-                        </div>
+                        <TextField
+                            type="number"
+                            step="any"
+                            floatingLabelText={this.props.label}
+                            id={this.props.id}
+                            value={this.state.value}
+                            onChange={this.handleInput}
+                            disabled={this.props.isTemplate}
+                        />
                     </div>
                 );
             case 'checkbox':
                 return(
                     <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
-                        <p>{this.props.label}</p>
-                        <button disabled={this.props.isTemplate} id={this.props.id} className={`btn btn-small ${ this.state.value ? 'btn-success' : 'btn-danger'}`} onClick={this.handleToggle}>{this.state.value.toString() || 'True / False'}</button>
+                        <Toggle
+                            label={this.props.label}
+                            id={this.props.id}
+                            disabled={this.props.isTemplate}
+                            onToggle={this.handleToggle}
+                            toggled={this.state.value || false}
+                            labelPosition="right"
+                        />
                     </div>
                 );
             default:
                 return(
-                    <div className={`form-group ${this.props.isTemplate && 'isTemplateInput'}`}>
-                        <label htmlFor={this.props.id}>{this.props.label}</label>
-                        <input  type="text"
-                                className="form-control"
-                                id={this.props.id}
-                                value={this.state.value}
-                                onChange={this.handleInput}
-                                disabled={this.props.isTemplate}
+                    <div className={`${this.props.isTemplate && 'isTemplateInput'}`}>
+                        <TextField
+                            type="text"
+                            floatingLabelText={this.props.label}
+                            id={this.props.id}
+                            value={this.state.value}
+                            onChange={this.handleInput}
+                            disabled={this.props.isTemplate}
                         />
                     </div>
                 );
@@ -101,12 +109,12 @@ export default class ContextualInput extends Component {
             value: element.value
         }, this.props.updateRecordFormState({[element.id]: {value: element.value}}));
     }
-    handleToggle(e){
+    handleToggle(e, toggle){
         e.preventDefault();
         let element = e.target;
         this.setState({
-            value: !this.state.value
-        }, this.props.updateRecordFormState(({[element.id]: {value: !this.state.value}})));
+            value: toggle
+        }, this.props.updateRecordFormState(({[element.id]: {value: toggle}})));
     }
 }
 

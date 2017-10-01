@@ -42,7 +42,7 @@ class App extends Component {
                         <Navbar toggleSideBar={this.toggleSideBar} user={this.state.user} />
                         <div className="container-fluid">
                             <Sidebar open={this.state.openSidebar} />
-                            <div className={`main ${this.state.openSidebar ? 'col-10': 'col-12'} ml-auto`}>
+                            <div className={`main ${this.state.openSidebar ? 'col-sm-7 col-md-8 col-lg-9 col-xl-10 ': 'col-12'} ml-auto`}>
                                 <Switch>
                                     <PrivateRoute authed={this.state.authed} exact path='/' component={Index} />
                                     <PrivateRoute authed={this.state.authed} user={this.state.user} path={`/content/add`} component={AddContentType} />

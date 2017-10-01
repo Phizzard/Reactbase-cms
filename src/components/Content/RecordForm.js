@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import {Card, CardHeader, CardActions, CardTitle, CardText, TextField, RaisedButton, Snackbar } from 'material-ui';
 import ContextualInput from './ContextualInput';
 import { NavLink, Redirect } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
@@ -29,23 +30,33 @@ export default class RecordForm extends Component {
         }
     }
     render(){
-        const redirect = this.state.redirect;
+        const   redirect = this.state.redirect,
+                CardHeaderStyle = {
+                    backgroundColor: '#5a5a5a'
+                },
+                titleColor = "#FFF",
+                saveColor = "#28a745"
+        ;
         if(redirect){
             return <Redirect to="/" />;
         }
         let formTitle = this.props.edit ? "Edit Content" : "Add New Content",
-            deleteRecord = this.props.edit && !this.props.recordId && <button className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>,
-            editTemplate = this.props.edit && <NavLink className="btn btn-info float-right" to={`/content/${this.props.contentId}/edit/template`}>{`Update ${this.props.formattedId} Template`}</NavLink>,
+            deleteRecord = this.props.edit && !this.props.recordId && <RaisedButton className="float-right" secondary={true} label="Delete" onClick={this.handleDelete}></RaisedButton>,
+            editTemplate = this.props.edit && <RaisedButton className="float-right" primary={true} label={`Update ${this.props.formattedId} Template`}><NavLink to={`/content/${this.props.contentId}/edit/template`}></NavLink></RaisedButton>,
             idInput = !this.props.edit && <ContextualInput key="recordId" label="ID" id="recordId" updateRecordFormState={this.updateRecordId} value={this.state.recordId}/>
         ;
         return(
-            <div className="card">
-                <div className="card-header bg-dark text-white">
-                    <h5 className="float-left">{formTitle}</h5>
+            <Card>
+                <CardHeader
+                    title={formTitle}
+                    style={CardHeaderStyle}
+                    titleColor={titleColor}
+                />
+                <CardActions>
                     {editTemplate}
                     {deleteRecord}
-                </div>
-                <div className="card-body">
+                </CardActions>
+                <CardText>
                     <form>
                         {idInput}
                         {
@@ -69,25 +80,25 @@ export default class RecordForm extends Component {
                             )
                             :
                             (
-                                <div className="alert alert-info" role="alert">
-                                  No Template Created, <NavLink to={`/content/${this.props.contentId}/edit/template`} className="btn btn-info">{`Lets go create a template for ${this.props.formattedId}`}</NavLink>
-                                </div>
+                                <Card>
+                                     No Template Created, <RaisedButton label={`Lets go create a template for ${this.props.formattedId}`}><NavLink to={`/content/${this.props.contentId}/edit/template`}></NavLink></RaisedButton>
+                                </Card>
                             )
                         }
                         {
                             this.state.saving ?
                             (
-                                <button type="submit" className="btn btn-success" disabled >Saving...</button>
+                                <RaisedButton type="submit" labelColor="#FFF" backgroundColor="#28a745" label="Saving..." disabled ></RaisedButton>
                             )
                             :
                             (
-                                <button type="submit" className="btn btn-success" onClick={this.save}>Save</button>
+                                <RaisedButton type="submit" labelColor="#FFF" backgroundColor="#28a745" label="Save" onClick={this.save}></RaisedButton>
                             )
                         }
                     </form>
-                </div>
+                </CardText>
                 {this.renderFeedback()}
-            </div>
+            </Card>
         );
     }
     updateToBeSaved(input){
@@ -143,21 +154,13 @@ export default class RecordForm extends Component {
         });
     }
     renderFeedback(){
-        if (this.state.isSaved){
-            return(
-                <div className="card-footer text-white bg-success">
-                    <span>Save Successful!</span>
-                </div>
-            );
-        } else if (this.state.error.length > 0) {
-            return(
-                <div className="card-footer text-white bg-danger">
-                    <span>Uh oh, Something went horribly wrong!</span>
-                </div>
-            );
-        }
-
-
+        return(
+            <Snackbar
+                open={this.state.isSaved}
+                message={this.state.error.length > 0 ? "Uh Oh something went wrong!": "Save Successful!"}
+                autoHideDuration={4000}
+            />
+        );
     }
 }
 
