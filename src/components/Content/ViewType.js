@@ -1,5 +1,19 @@
 import React, { Component } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
+import {
+  Table,
+  TableBody,
+  TableFooter,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+  IconMenu,
+  MenuItem,
+  IconButton,
+  RaisedButton
+} from 'material-ui';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ContentController from '../../controllers/Content';
 import utl from '../../utl/StringFormatting';
 
@@ -43,23 +57,29 @@ export default class ViewContentType extends Component {
             <div className="row">
                 <main className="col-12" role="main">
                     <h1>View {formattedId} </h1>
-                    <table className="table table-hover">
-                      <thead className="thead-inverse">
-                        <tr>
-                          <th>Name</th>
-                          <th>Last Updated</th>
-                          <th>Created On</th>
-                          <th>
-                              <NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} className="btn btn-info float-right">{`Update ${formattedId} Template`}</NavLink>
-                              <NavLink to={`/content/${this.props.match.params.contentId}/add`} className="btn btn-success float-right">{`Add New ${formattedId} Entry`}</NavLink>
-                              <button className="btn btn-danger float-right" onClick={this.handleDelete}>{`Delete ${formattedId} Type`}</button>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.renderContentItems()}
-                      </tbody>
-                    </table>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHeaderColumn>Name</TableHeaderColumn>
+                                <TableHeaderColumn>Last Updated</TableHeaderColumn>
+                                <TableHeaderColumn>Created On</TableHeaderColumn>
+                                <TableHeaderColumn>
+                                    <IconMenu
+                                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                                        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                                    >
+                                        <MenuItem primaryText={`Add New ${formattedId} Entry`} ><NavLink to={`/content/${this.props.match.params.contentId}/add`}></NavLink></MenuItem>
+                                        <MenuItem primaryText={`Update ${formattedId} Template`} ><NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} ></NavLink></MenuItem>
+                                        <MenuItem onClick={this.handleDelete} primaryText={`Delete ${formattedId} Type`} />
+                                    </IconMenu>
+                                </TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {this.renderContentItems()}
+                        </TableBody>
+                    </Table>
                 </main>
             </div>
         );
@@ -68,15 +88,15 @@ export default class ViewContentType extends Component {
         if(Object.entries(this.state.data).length > 0 || this.state.data !== null){
             return Object.entries(this.state.data).map(([key, item]) =>{
                 return(
-                    <tr key={key}>
-                        <td>{key}</td>
-                        <td>SomeDate</td>
-                        <td>SomeDate</td>
-                        <td>
-                            <NavLink className="btn btn-sm btn-info" to={`/content/${this.props.match.params.contentId}/${key}/edit`}>Edit</NavLink>
-                            <button id={key} className="btn btn-sm btn-danger" onClick={this.handleDelete}>Delete</button>
-                        </td>
-                    </tr>
+                    <TableRow key={key}>
+                        <TableRowColumn>{key}</TableRowColumn>
+                        <TableRowColumn>SomeDate</TableRowColumn>
+                        <TableRowColumn>SomeDate</TableRowColumn>
+                        <TableRowColumn>
+                            <RaisedButton label="Edit" primary={true}><NavLink to={`/content/${this.props.match.params.contentId}/${key}/edit`}></NavLink></RaisedButton>
+                            <RaisedButton label="Delete" secondary={true} id={key} onClick={this.handleDelete}></RaisedButton>
+                        </TableRowColumn>
+                    </TableRow>
                 );
             });
         }
@@ -96,5 +116,11 @@ export default class ViewContentType extends Component {
             }
 
         });
+    }
+    editTemplate(e){
+        e.preventDefault();
+    }
+    addEntry(e){
+        e.preventDefault();
     }
 }
