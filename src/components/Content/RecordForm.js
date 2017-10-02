@@ -148,6 +148,7 @@ export default class RecordForm extends Component {
         e.preventDefault();
         let content = new ContentController();
         content.DeleteRecord(this.props.contentId).then(()=>{
+            this.props.updateSidebar();
             this.setState({
                 redirect: true
             });

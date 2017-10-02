@@ -34,7 +34,7 @@ export default class EditRecord extends Component {
             <div className="row">
                 <main className="col-12">
                     <h1>Edit {formattedId} Page</h1>
-                    <RecordForm edit formattedId={formattedId} data={this.state.data} contentId={this.props.match.params.contentId} recordId={this.props.match.params.recordId} />
+                    <RecordForm edit formattedId={formattedId} data={this.state.data} contentId={this.props.match.params.contentId} recordId={this.props.match.params.recordId} updateSidebar={this.props.updateSidebar} />
                 </main>
             </div>
         );

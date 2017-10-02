@@ -96,6 +96,7 @@ export default class AddContentType extends Component {
                 }
             }
             content.CreateType(contentModel).then(()=>{
+                this.props.updateSidebar();
                 this.setState({
                     redirect: true
                 });

@@ -12,14 +12,23 @@ export default class Sidebar extends Component {
             content: {}
         };
         this.renderContent = this.renderContent.bind(this);
+        this.fetchContent = this.fetchContent.bind(this);
     }
     componentDidMount(){
+        this.fetchContent();
+    }
+    fetchContent(){
         let fetch = new ContentController();
         fetch.List().then((content)=>{
             this.setState({
                 content: content
             });
         });
+    }
+    componentWillReceiveProps(nextProps){
+        if (this.props.updateSidebar !== nextProps.updateSidebar){
+            this.fetchContent();
+        }
     }
     render(){
         const drawerStyle = {

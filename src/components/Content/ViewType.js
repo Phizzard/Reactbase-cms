@@ -89,6 +89,7 @@ export default class ViewContentType extends Component {
             if (element.id){
                 this.fetchRecords();
             } else {
+                this.props.updateSidebar();
                 this.setState({
                     redirect: true
                 });
