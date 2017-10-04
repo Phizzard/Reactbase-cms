@@ -34,7 +34,7 @@ class App extends Component {
         firebase.initializeApp(config);
         firebase.auth().onAuthStateChanged((user) => {
             user ?
-                this.setState({ user , authed: true})
+                this.setState({ user , authed: true}, this.updateSidebar())
                 :
                 this.setState({ user: null, authed: false})
             ;
