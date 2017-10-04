@@ -3,12 +3,15 @@ import ContentController from '../../controllers/Content';
 import InputPicker from './InputPicker';
 import ContextualInput from '../Content/ContextualInput';
 import utl from '../../utl/StringFormatting.js';
+import {FloatingActionButton, Dialog, RaisedButton} from 'material-ui';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import update from 'immutability-helper';
 
 export default class EditTemplate extends Component {
     constructor(props){
         super(props);
         this.state = {
+            open: false,
             inputs: {}
         };
         this.fetchTypeData = this.fetchTypeData.bind(this);
@@ -32,10 +35,13 @@ export default class EditTemplate extends Component {
         ;
     }
     render(){
+        const addStyle = {
+            margin: 'auto'
+        }
         return(
             <div className="row">
-                <InputPicker addInput={this.addInput} />
-                <main className="col-sm-8 ml-sm-auto col-md-9 pt-3" role="main">
+
+                <main className="col-12" role="main">
                     <h2>Edit {utl.capitalize(this.props.match.params.contentId)}</h2>
                     <form>
                         {
@@ -64,21 +70,32 @@ export default class EditTemplate extends Component {
                                 </div>
                             )
                         }
-                        {
-                            this.state.saving ?
-                            (
-                                <button type="submit" className="btn btn-success" disabled >Saving...</button>
-                            )
-                            :
-                            (
-                                <button type="submit" className="btn btn-success" onClick={this.save}>Save</button>
-                            )
-                        }
+                        <div className="text-center">
+                            <FloatingActionButton style={addStyle} onClick={this.handleOpen}>
+                              <ContentAdd />
+                            </FloatingActionButton>
+                        </div>
+                        <Dialog
+                            title="Dialog With Actions"
+                            modal={false}
+                            open={this.state.open}
+                            onRequestClose={this.handleClose}
+                        >
+                            <InputPicker addInput={this.addInput} />
+                        </Dialog>
+                        <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={this.state.saving} label={this.state.saving ? "Saving..." : "Save"} onClick={this.handleAddContentType}></RaisedButton>
                     </form>
                 </main>
             </div>
         );
     }
+    handleOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false});
+    };
     addInput(id){
         let newId = `${id}-${Object.keys(this.state.inputs).length}`,
             newTitle = utl.capitalize(id),
@@ -92,6 +109,7 @@ export default class EditTemplate extends Component {
             newState = update(this.state.inputs, {$merge: newInput})
         ;
         this.setState({
+            open: false,
             inputs: newState
         });
     }
