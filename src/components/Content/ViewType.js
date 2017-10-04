@@ -11,7 +11,12 @@ import {
   IconMenu,
   MenuItem,
   IconButton,
-  RaisedButton
+  RaisedButton,
+  Card,
+  CardHeader,
+  CardActions,
+  CardTitle,
+  CardText,
 } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ContentController from '../../controllers/Content';
@@ -52,34 +57,49 @@ export default class ViewContentType extends Component {
         if (redirect){
             return <Redirect to="/" />;
         }
-        let formattedId = utl.capitalize(this.props.match.params.contentId);
+        const CardHeaderStyle = {
+            backgroundColor: '#5a5a5a'
+        },
+        titleColor = "#FFF",
+        formattedId = utl.capitalize(this.props.match.params.contentId)
+        ;
         return(
             <div className="row">
                 <main className="col-12" role="main">
                     <h1>View {formattedId} </h1>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHeaderColumn>Name</TableHeaderColumn>
-                                <TableHeaderColumn>Last Updated</TableHeaderColumn>
-                                <TableHeaderColumn>Created On</TableHeaderColumn>
-                                <TableHeaderColumn>
-                                    <IconMenu
-                                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                                        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                                    >
-                                        <MenuItem primaryText={`Add New ${formattedId} Entry`} ><NavLink to={`/content/${this.props.match.params.contentId}/add`}></NavLink></MenuItem>
-                                        <MenuItem primaryText={`Update ${formattedId} Template`} ><NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} ></NavLink></MenuItem>
-                                        <MenuItem onClick={this.handleDelete} primaryText={`Delete ${formattedId} Type`} />
-                                    </IconMenu>
-                                </TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {this.renderContentItems()}
-                        </TableBody>
-                    </Table>
+                    <Card>
+                        <CardHeader
+                            title={formattedId}
+                            style={CardHeaderStyle}
+                            titleColor={titleColor}
+                        />
+                        <CardActions>
+                            <IconMenu
+                                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                            >
+                                <NavLink to={`/content/${this.props.match.params.contentId}/add`}><MenuItem primaryText={`Add New ${formattedId} Entry`} ></MenuItem></NavLink>
+                                <NavLink to={`/content/${this.props.match.params.contentId}/edit/template`} ><MenuItem primaryText={`Update ${formattedId} Template`} ></MenuItem></NavLink>
+                                <MenuItem onClick={() => this.handleDelete()} primaryText={`Delete ${formattedId} Type`} />
+                            </IconMenu>
+                        </CardActions>
+                        <CardText>
+                            <Table>
+                                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                                    <TableRow>
+                                        <TableHeaderColumn>Name</TableHeaderColumn>
+                                        <TableHeaderColumn>Last Updated</TableHeaderColumn>
+                                        <TableHeaderColumn>Created On</TableHeaderColumn>
+                                        <TableHeaderColumn>Action</TableHeaderColumn>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody displayRowCheckbox={false}>
+                                    {this.renderContentItems()}
+                                </TableBody>
+                            </Table>
+                        </CardText>
+                    </Card>
                 </main>
             </div>
         );
@@ -88,25 +108,23 @@ export default class ViewContentType extends Component {
         if(Object.entries(this.state.data).length > 0 || this.state.data !== null){
             return Object.entries(this.state.data).map(([key, item]) =>{
                 return(
-                    <TableRow key={key}>
+                    <TableRow key={key} selectable={false} >
                         <TableRowColumn>{key}</TableRowColumn>
                         <TableRowColumn>SomeDate</TableRowColumn>
                         <TableRowColumn>SomeDate</TableRowColumn>
                         <TableRowColumn>
-                            <RaisedButton label="Edit" primary={true}><NavLink to={`/content/${this.props.match.params.contentId}/${key}/edit`}></NavLink></RaisedButton>
-                            <RaisedButton label="Delete" secondary={true} id={key} onClick={this.handleDelete}></RaisedButton>
+                            <NavLink to={`/content/${this.props.match.params.contentId}/${key}/edit`}><RaisedButton label="Edit" primary={true}></RaisedButton></NavLink>
+                            <RaisedButton label="Delete" secondary={true} id={key} onClick={() => this.handleDelete(key)}></RaisedButton>
                         </TableRowColumn>
                     </TableRow>
                 );
             });
         }
     }
-    handleDelete(e){
-        e.preventDefault();
-        let element = e.target,
-            record = new ContentController();
-        record.DeleteRecord(this.props.match.params.contentId, element.id || "" ).then(result=>{
-            if (element.id){
+    handleDelete(recordId){
+        let record = new ContentController();
+        record.DeleteRecord(this.props.match.params.contentId, recordId || "" ).then(result=>{
+            if (recordId){
                 this.fetchRecords();
             } else {
                 this.props.updateSidebar();
@@ -114,7 +132,6 @@ export default class ViewContentType extends Component {
                     redirect: true
                 });
             }
-
         });
     }
     editTemplate(e){

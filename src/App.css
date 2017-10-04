@@ -88,3 +88,6 @@ h1 {
     cursor: pointer;
     background-color: #5d676f;
 }
+div[role=menu] a:hover {
+    text-decoration: none;
+}
