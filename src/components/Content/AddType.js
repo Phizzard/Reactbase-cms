@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
+import {TextField, RadioButton, RadioButtonGroup, RaisedButton} from 'material-ui';
 import ContentController from '../../controllers/Content';
 
 export default class AddContentType extends Component {
@@ -30,25 +31,26 @@ export default class AddContentType extends Component {
                 <main className="col-12 ml-sm-auto" role="main">
                     <h1>Add New Content Type</h1>
                     <form>
-                        <div className="form-group">
-                            <label>New content name</label>
-                            <input type="text" className="form-control form-control-lg" placeholder="e.g. Articles" onChange={this.handleContentTypeName} value={this.state.newContentType} />
-                        </div>
+                        <TextField
+                            onChange={this.handleContentTypeName}
+                            value={this.state.newContentType}
+                            type="text"
+                            floatingLabelText="New Content Name"
+                            hintText="e.g. Articles"
+                        />
                         <h2>{`How many ${this.state.newContentType} will there be?`}</h2>
                         <p>For example, there is only one homepage entry, but there are multiple blog entries.</p>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input className="form-check-input" type="radio" value="single" checked={this.state.single} onChange={this.handleRadio} />
-                                {`There is only one ${this.state.newContentType} entry`}
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <label className="form-check-label">
-                                <input className="form-check-input" type="radio" id="multipleRadio" value="multiple" checked={this.state.multiple} onChange={this.handleRadio} />
-                                {`There are Multiple ${this.state.newContentType} entries`}
-                            </label>
-                        </div>
-                        <button className="btn btn-success" disabled={disabled} onClick={this.handleAddContentType}>{`Create ${this.state.newContentType}`}</button>
+                        <RadioButtonGroup onChange={this.handleRadio}>
+                            <RadioButton
+                                value="single"
+                                label={`There is only one ${this.state.newContentType} entry`}
+                            />
+                            <RadioButton
+                                value="multiple"
+                                label={`There is only one ${this.state.newContentType} entry`}
+                            />
+                        </RadioButtonGroup>
+                        <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={disabled} label={`Create ${this.state.newContentType}`} onClick={this.handleAddContentType}></RaisedButton>
                     </form>
                 </main>
             </div>
