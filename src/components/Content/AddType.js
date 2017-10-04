@@ -47,7 +47,7 @@ export default class AddContentType extends Component {
                             />
                             <RadioButton
                                 value="multiple"
-                                label={`There is only one ${this.state.newContentType} entry`}
+                                label={`There are multiple ${this.state.newContentType} entries`}
                             />
                         </RadioButtonGroup>
                         <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={disabled} label={`Create ${this.state.newContentType}`} onClick={this.handleAddContentType}></RaisedButton>
