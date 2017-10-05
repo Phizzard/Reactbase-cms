@@ -45,9 +45,11 @@ export default class ViewContentType extends Component {
             let fetch = new ContentController();
             fetch.GetRecord(this.props.match.params.contentId)
                 .then((result) =>{
-                    this.setState({
-                        data: result.items
-                    });
+                    if(result){
+                        this.setState({
+                            data: result.items
+                        });
+                    } 
                 })
             ;
         }
