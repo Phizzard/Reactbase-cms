@@ -102,7 +102,6 @@ export default class RecordForm extends Component {
         );
     }
     updateToBeSaved(input){
-        console.log(input);
         let prevToBeSaved = this.state.toBeSaved,
             nextToBeSaved = update(prevToBeSaved, {$merge: input});
         this.setState({
