@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import {TextField, RadioButton, RadioButtonGroup, RaisedButton} from 'material-ui';
 import ContentController from '../../controllers/Content';
+import TemplateController from '../../controllers/Templates';
 
 export default class AddContentType extends Component {
     constructor(props){
@@ -75,39 +76,56 @@ export default class AddContentType extends Component {
     }
     handleAddContentType(e){
         e.preventDefault();
-        let content = new ContentController(),
+        let template = new TemplateController(),
             id = this.state.newContentType.toLowerCase(),
-            contentModel;
-            if(this.state.type === "single"){
-                contentModel = {
-                    [id]: {
-                        title: {
-                            input: 'shortText',
-                            label: 'Title',
-                            value: this.state.newContentType
-                        },
-                        type: this.state.type
-                    }
-                };
-            } else {
-                contentModel = {
-                    [id]: {
-                        items: false,
-                        type: this.state.type
-                    }
+            initialTemplate
+        ;
+        initialTemplate = {
+            [id]: {
+                title: {
+                    input: "shortText",
+                    instructions: "This is the title",
+                    label: "Title",
+                    required: true
                 }
             }
-            content.CreateType(contentModel).then(()=>{
-                this.props.updateSidebar();
-                this.setState({
-                    redirect: true
-                });
-            }).catch((error)=>{
-                return {
-                    errorCode: error.code,
-                    errorMessage: error.message
-                };
-            });
+        };
 
+        template.CreateRecord(initialTemplate).then(()=>{
+            let content = new ContentController(),
+                initialContent;
+
+                if(this.state.type === "single"){
+                    initialContent = {
+                        [id]: {
+                            title: this.state.newContentType,
+                            type: this.state.type
+                        }
+                    };
+                } else {
+                    initialContent = {
+                        [id]: {
+                            items: false,
+                            type: this.state.type
+                        }
+                    }
+                }
+                content.CreateRecord(initialContent).then(()=>{
+                    this.props.updateSidebar();
+                    this.setState({
+                        redirect: true
+                    });
+                }).catch((error)=>{
+                    return {
+                        errorCode: error.code,
+                        errorMessage: error.message
+                    };
+                });
+        }).catch((error)=>{
+            return {
+                errorCode: error.code,
+                errorMessage: error.message
+            };
+        });
     }
 }

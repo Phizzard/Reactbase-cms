@@ -19,7 +19,7 @@ export default class Content {
         });
     }
 
-    CreateType(newType){
+    CreateRecord(newType){
         return firebase.database().ref(`${this.dbRef}`).update(newType).catch((error)=>{
             return{
                 errorCode: error.code,
@@ -28,8 +28,8 @@ export default class Content {
         });
     }
 
-    UpdateRecord(type, input, data, itemId=""){
-        return firebase.database().ref(`${this.dbRef}${type}/${itemId && 'items/'+itemId+'/'}${input}`).update(data).catch((error)=>{
+    UpdateRecord(type, data, itemId=""){
+        return firebase.database().ref(`${this.dbRef}${type}/${itemId && 'items/'+itemId}`).update(data).catch((error)=>{
             return {
                 errorCode: error.code,
                 errorMessage: error.message
@@ -40,7 +40,7 @@ export default class Content {
     UpdateCollection(type, inputs, itemId=""){
         let collectionPromise = [];
         collectionPromise.push(Object.entries(inputs).map(([key, value]) =>{
-            return this.UpdateRecord(type, key, value, itemId).catch((error)=>{
+            return this.UpdateRecord(type, {[key]: value}, itemId).catch((error)=>{
                 return {
                     errorCode: error.code,
                     errorMessage: error.message

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import update from 'immutability-helper';
-import {Card, CardHeader, CardActions, CardTitle, CardText, TextField, RaisedButton, Snackbar } from 'material-ui';
+import {Card, CardHeader, CardActions, CardText, RaisedButton, Snackbar } from 'material-ui';
 import ContextualInput from './ContextualInput';
 import { NavLink, Redirect } from 'react-router-dom';
 import ContentController from '../../controllers/Content';
+import TemplateController from '../../controllers/Templates';
 
 export default class RecordForm extends Component {
     constructor(props){
@@ -34,8 +34,7 @@ export default class RecordForm extends Component {
                 CardHeaderStyle = {
                     backgroundColor: '#5a5a5a'
                 },
-                titleColor = "#FFF",
-                saveColor = "#28a745"
+                titleColor = "#FFF"
         ;
         if(redirect){
             return <Redirect to="/" />;
@@ -60,20 +59,20 @@ export default class RecordForm extends Component {
                     <form>
                         {idInput}
                         {
-                            Object.entries(this.props.data).length > 0 ?
+                            Object.entries(this.props.content).length > 0 ?
                             (
-                                Object.entries(this.props.data).filter(([key, item]) => key !== 'type').map(([_key, _item]) =>{
+                                Object.entries(this.props.content).filter(([key, item]) => key !== 'type').map(([_key, _item]) =>{
                                     let item = _item,
                                         key = _key
                                     ;
                                     return(
                                         <ContextualInput
                                             key={key}
-                                            label={item.label}
-                                            input={item.input}
+                                            label={this.props.template[key].label}
+                                            input={this.props.template[key].input}
                                             id={key}
                                             updateRecordFormState={this.updateToBeSaved}
-                                            value={this.props.edit ? item.value : undefined}
+                                            value={this.props.edit ? item : undefined}
                                          />
                                     )
                                 })
@@ -102,15 +101,9 @@ export default class RecordForm extends Component {
         );
     }
     updateToBeSaved(input){
-        let inputKey = Object.keys(input)[0];
-        if(!this.props.edit){
-            input[inputKey]["label"] = this.props.data[inputKey].label;
-            input[inputKey]["input"] = this.props.data[inputKey].input;
-        }
-        let prevToBeSaved = this.state.toBeSaved,
-            nextToBeSaved = update(prevToBeSaved, {$merge: input});
+
         this.setState({
-            toBeSaved: nextToBeSaved
+            toBeSaved: input
         });
     }
     updateRecordId(input){
@@ -148,9 +141,12 @@ export default class RecordForm extends Component {
         e.preventDefault();
         let content = new ContentController();
         content.DeleteRecord(this.props.contentId).then(()=>{
-            this.props.updateSidebar();
-            this.setState({
-                redirect: true
+            let template = new TemplateController();
+            template.DeleteRecord(this.props.contentId).then(()=>{
+                this.props.updateSidebar();
+                this.setState({
+                    redirect: true
+                });
             });
         });
     }
@@ -167,7 +163,7 @@ export default class RecordForm extends Component {
 
 RecordForm.defaultProps = {
     formattedId : "",
-    data: {},
+    content: {},
     contentId : "",
     recordId: "",
     edit: false

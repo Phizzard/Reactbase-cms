@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ContentController from '../../controllers/Content';
+import TemplateController from '../../controllers/Templates';
 import InputPicker from './InputPicker';
 import ContextualInput from '../Content/ContextualInput';
 import utl from '../../utl/StringFormatting.js';
@@ -21,11 +21,11 @@ export default class EditTemplate extends Component {
         this.fetchTypeData();
     }
     fetchTypeData(){
-        let fetch = new ContentController();
+        let fetch = new TemplateController();
         fetch.GetRecord(this.props.match.params.contentId)
             .then((result) =>{
                 this.setState({
-                    inputs: result.type === 'single' ? result : result.items[Object.keys(result.items)[0]],
+                    inputs: result,
                     saving: false,
                     isSaved: false,
                     error: [],
@@ -102,8 +102,7 @@ export default class EditTemplate extends Component {
             newInput = {
                 [newId]: {
                     input: id,
-                    label: newTitle,
-                    value: false
+                    label: newTitle
                 }
             },
             newState = update(this.state.inputs, {$merge: newInput})

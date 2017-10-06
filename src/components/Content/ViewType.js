@@ -3,7 +3,6 @@ import { NavLink, Redirect } from 'react-router-dom';
 import {
   Table,
   TableBody,
-  TableFooter,
   TableHeader,
   TableHeaderColumn,
   TableRow,
@@ -15,11 +14,11 @@ import {
   Card,
   CardHeader,
   CardActions,
-  CardTitle,
   CardText,
 } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ContentController from '../../controllers/Content';
+import TemplateController from '../../controllers/Templates';
 import utl from '../../utl/StringFormatting';
 
 export default class ViewContentType extends Component {
@@ -49,7 +48,7 @@ export default class ViewContentType extends Component {
                         this.setState({
                             data: result.items
                         });
-                    } 
+                    }
                 })
             ;
         }
@@ -129,9 +128,12 @@ export default class ViewContentType extends Component {
             if (recordId){
                 this.fetchRecords();
             } else {
-                this.props.updateSidebar();
-                this.setState({
-                    redirect: true
+                let template = new TemplateController();
+                template.DeleteRecord(this.props.match.params.contentId).then(()=>{
+                    this.props.updateSidebar();
+                    this.setState({
+                        redirect: true
+                    });
                 });
             }
         });
