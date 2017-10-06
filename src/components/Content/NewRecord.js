@@ -26,18 +26,17 @@ export default class EditRecord extends Component {
         let template = new TemplateController();
         template.GetRecord(this.props.match.params.contentId)
             .then((result) => {
-                this.setState({
-                    template: result
-                }, this.fetchRecordData());
+                this.fetchRecordData(result);
             })
         ;
     }
-    fetchRecordData(){
+    fetchRecordData(template){
         let fetch = new ContentController();
-        fetch.GetRecord(this.props.match.params.contentId)
+        fetch.GetRecord(this.props.match.params.contentId, this.props.match.params.recordId || "")
             .then((result) =>{
                 this.setState({
-                    content: result
+                    content: result,
+                    template: template
                 });
             });
     }

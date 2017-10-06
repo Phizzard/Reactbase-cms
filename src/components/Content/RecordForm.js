@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 import {Card, CardHeader, CardActions, CardText, RaisedButton, Snackbar } from 'material-ui';
 import ContextualInput from './ContextualInput';
 import { NavLink, Redirect } from 'react-router-dom';
@@ -59,20 +60,20 @@ export default class RecordForm extends Component {
                     <form>
                         {idInput}
                         {
-                            Object.entries(this.props.content).length > 0 ?
+                            Object.entries(this.props.template).length > 0 ?
                             (
-                                Object.entries(this.props.content).filter(([key, item]) => key !== 'type').map(([_key, _item]) =>{
+                                Object.entries(this.props.template).filter(([key, item]) => key !== 'type').map(([_key, _item]) =>{
                                     let item = _item,
                                         key = _key
                                     ;
                                     return(
                                         <ContextualInput
                                             key={key}
-                                            label={this.props.template[key].label}
-                                            input={this.props.template[key].input}
+                                            label={item.label}
+                                            input={item.input}
                                             id={key}
                                             updateRecordFormState={this.updateToBeSaved}
-                                            value={this.props.edit ? item : undefined}
+                                            value={this.props.edit ? this.props.content[key] : undefined}
                                          />
                                     )
                                 })
@@ -101,9 +102,11 @@ export default class RecordForm extends Component {
         );
     }
     updateToBeSaved(input){
-
+        console.log(input);
+        let prevToBeSaved = this.state.toBeSaved,
+            nextToBeSaved = update(prevToBeSaved, {$merge: input});
         this.setState({
-            toBeSaved: input
+            toBeSaved: nextToBeSaved
         });
     }
     updateRecordId(input){
