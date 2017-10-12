@@ -3,7 +3,8 @@ import TemplateController from '../../controllers/Templates';
 import InputPicker from './InputPicker';
 import ContextualInput from '../Content/ContextualInput';
 import utl from '../../utl/StringFormatting.js';
-import {FloatingActionButton, Dialog, RaisedButton} from 'material-ui';
+import {FloatingActionButton, Dialog, RaisedButton, Card, CardHeader, CardActions, CardText} from 'material-ui';
+import { NavLink } from 'react-router-dom';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import update from 'immutability-helper';
 
@@ -37,54 +38,69 @@ export default class EditTemplate extends Component {
     render(){
         const addStyle = {
             margin: 'auto'
-        }
+        },CardHeaderStyle = {
+            backgroundColor: '#5a5a5a'
+        },
+        titleColor = "#FFF",
+        editContent = <NavLink to={`/content/${this.props.match.params.contentId}/edit`}><RaisedButton className="float-right" primary={true} label={`Update ${utl.capitalize(this.props.match.params.contentId)} Content`}></RaisedButton></NavLink>
         return(
             <div className="row">
-
                 <main className="col-12" role="main">
                     <h2>Edit {utl.capitalize(this.props.match.params.contentId)}</h2>
-                    <form>
-                        {
-                            Object.entries(this.state.inputs).length > 0 ?
-                            (
-                                Object.entries(this.state.inputs).filter(([key, item]) => key !== 'type').map(([_key, _item]) =>{
-                                    let item = _item,
-                                        key = _key
-                                    ;
-                                    return(
-                                        <ContextualInput
-                                            key={key}
-                                            label={item.label}
-                                            input={item.input}
-                                            id={key}
-                                            updateRecordFormState={this.updateToBeSaved}
-                                            isTemplate={true}
-                                         />
+                    <Card>
+                        <CardHeader
+                            title="Edit Template"
+                            style={CardHeaderStyle}
+                            titleColor={titleColor}
+                        />
+                        <CardActions>
+                            {editContent}
+                        </CardActions>
+                        <CardText>
+                            <form>
+                                {
+                                    Object.entries(this.state.inputs).length > 0 ?
+                                    (
+                                        Object.entries(this.state.inputs).filter(([key, item]) => key !== 'type').map(([_key, _item]) =>{
+                                            let item = _item,
+                                                key = _key
+                                            ;
+                                            return(
+                                                <ContextualInput
+                                                    key={key}
+                                                    label={item.label}
+                                                    input={item.input}
+                                                    id={key}
+                                                    updateRecordFormState={this.updateToBeSaved}
+                                                    isTemplate={true}
+                                                 />
+                                            )
+                                        })
                                     )
-                                })
-                            )
-                            :
-                            (
-                                <div>
-                                    No Input fields created
+                                    :
+                                    (
+                                        <div>
+                                            No Input fields created
+                                        </div>
+                                    )
+                                }
+                                <div className="text-center">
+                                    <FloatingActionButton style={addStyle} onClick={this.handleOpen}>
+                                      <ContentAdd />
+                                    </FloatingActionButton>
                                 </div>
-                            )
-                        }
-                        <div className="text-center">
-                            <FloatingActionButton style={addStyle} onClick={this.handleOpen}>
-                              <ContentAdd />
-                            </FloatingActionButton>
-                        </div>
-                        <Dialog
-                            title="Dialog With Actions"
-                            modal={false}
-                            open={this.state.open}
-                            onRequestClose={this.handleClose}
-                        >
-                            <InputPicker addInput={this.addInput} />
-                        </Dialog>
-                        <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={this.state.saving} label={this.state.saving ? "Saving..." : "Save"} onClick={this.handleAddContentType}></RaisedButton>
-                    </form>
+                                <Dialog
+                                    title="Dialog With Actions"
+                                    modal={false}
+                                    open={this.state.open}
+                                    onRequestClose={this.handleClose}
+                                >
+                                    <InputPicker addInput={this.addInput} />
+                                </Dialog>
+                                <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={this.state.saving} label={this.state.saving ? "Saving..." : "Save"} onClick={this.handleAddContentType}></RaisedButton>
+                            </form>
+                        </CardText>
+                    </Card>
                 </main>
             </div>
         );
