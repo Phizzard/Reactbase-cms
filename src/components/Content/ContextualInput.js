@@ -8,14 +8,11 @@ export default class ContextualInput extends Component {
             id: '',
             input: '',
             label: '',
-            value: '',
-            open: false
+            value: ''
         }
 
         this.handleInput = this.handleInput.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
-        this.handleTouchTap = this.handleTouchTap.bind(this);
-        this.handleRequestClose = this.handleRequestClose.bind(this);
     }
     componentDidMount(){
         this.setState({
@@ -32,9 +29,6 @@ export default class ContextualInput extends Component {
     render(){
         const inputStyle = {
                 display: 'block'
-            },
-            optionsStyle = {
-                padding: 0
             }
         ;
         switch(this.props.input){
@@ -104,34 +98,6 @@ export default class ContextualInput extends Component {
                             onChange={this.handleInput}
                             disabled={this.props.isTemplate}
                         />
-                        {
-                            this.props.isTemplate && (
-                                <div>
-                                    <RaisedButton primary={true} label="Options" fullWidth={true} onClick={this.handleTouchTap} />
-                                    <Dialog
-                                        bodyStyle={optionsStyle}
-                                        open={this.state.open}
-                                        onRequestClose={this.handleRequestClose}
-                                    >
-                                        <Tabs>
-                                            <Tab label="Options">
-                                                <div className="container">
-                                                    <div className="row">
-                                                        <form style={{padding: '24px'}}>
-                                                            <TextField style={inputStyle} floatingLabelText="Label" />
-                                                            <TextField style={inputStyle} floatingLabelText="Other Options" />
-                                                            <TextField style={inputStyle} floatingLabelText="Other Options" />
-                                                            <TextField style={inputStyle} floatingLabelText="Other Options" />
-                                                            <TextField style={inputStyle} floatingLabelText="Other Options" />
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </Tab>
-                                        </Tabs>
-                                    </Dialog>
-                                </div>
-                            )
-                        }
                     </div>
                 );
         }
@@ -150,20 +116,6 @@ export default class ContextualInput extends Component {
             value: toggle
         }, this.props.updateRecordFormState(({[element.id]: toggle})));
     }
-    handleTouchTap = (event) => {
-    // This prevents ghost click.
-    event.preventDefault();
-
-    this.setState({
-      open: true
-    });
-  };
-
-  handleRequestClose = () => {
-    this.setState({
-      open: false,
-    });
-  };
 }
 
 ContextualInput.defaultProps = {
