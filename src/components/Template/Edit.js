@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import TemplateController from '../../controllers/Templates';
 import InputPicker from './InputPicker';
-import ContextualInput from '../Content/ContextualInput';
+import InputForm from './InputForm';
 import utl from '../../utl/StringFormatting.js';
-import {FloatingActionButton, Dialog, RaisedButton, Card, CardHeader, CardActions, CardText} from 'material-ui';
+import {FloatingActionButton, Dialog, RaisedButton, Card, CardHeader, CardActions, CardText, FlatButton, Paper, TextField, Toggle} from 'material-ui';
 import { NavLink } from 'react-router-dom';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import update from 'immutability-helper';
@@ -41,12 +41,15 @@ export default class EditTemplate extends Component {
         },CardHeaderStyle = {
             backgroundColor: '#5a5a5a'
         },
+        inputStyle = {
+            display: 'block'
+        },
         titleColor = "#FFF",
         editContent = <NavLink to={`/content/${this.props.match.params.contentId}/edit`}><RaisedButton className="float-right" primary={true} label={`Update ${utl.capitalize(this.props.match.params.contentId)} Content`}></RaisedButton></NavLink>
         return(
             <div className="row">
                 <main className="col-12" role="main">
-                    <h2>Edit {utl.capitalize(this.props.match.params.contentId)}</h2>
+                    <h1>Edit {utl.capitalize(this.props.match.params.contentId)} Template</h1>
                     <Card>
                         <CardHeader
                             title="Edit Template"
@@ -66,14 +69,12 @@ export default class EditTemplate extends Component {
                                                 key = _key
                                             ;
                                             return(
-                                                <ContextualInput
-                                                    key={key}
+                                                <InputForm
+                                                    title={utl.capitalize(key)}
                                                     label={item.label}
-                                                    input={item.input}
-                                                    id={key}
-                                                    updateRecordFormState={this.updateToBeSaved}
-                                                    isTemplate={true}
-                                                 />
+                                                    instructions={item.instructions}
+                                                    required={item.required}
+                                                />
                                             )
                                         })
                                     )

@@ -57,9 +57,6 @@ h1 {
 
 .isTemplateInput:hover{
     cursor: pointer;
-    -webkit-box-shadow: 0px 0px 5px 0px rgba(51,204,0,1);
-    -moz-box-shadow: 0px 0px 5px 0px rgba(51,204,0,1);
-    box-shadow: 0px 0px 5px 0px rgba(51,204,0,1);
 }
 .isTemplateInput label:hover, .isTemplateInput input:hover{
     cursor: pointer;
