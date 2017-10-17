@@ -70,6 +70,8 @@ export default class EditTemplate extends Component {
                                             ;
                                             return(
                                                 <InputForm
+                                                    key={key}
+                                                    id={key}
                                                     title={utl.capitalize(key)}
                                                     label={item.label}
                                                     instructions={item.instructions}

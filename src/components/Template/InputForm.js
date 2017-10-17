@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {Card, CardHeader, CardText, TextField, Toggle} from 'material-ui';
+import utl from '../../utl/StringFormatting.js';
 
 export default class InputForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            title: props.title,
+            key: props.id,
             label: props.label,
             instructions: props.instructions,
             required: props.required
@@ -29,12 +30,18 @@ export default class InputForm extends Component {
         return(
             <Card>
                 <CardHeader
-                    title={this.state.title}
+                    title={utl.capitalize(this.state.key)}
                     style={CardHeaderStyle}
                     titleColor={titleColor}
                 />
                 <CardText>
-                    <form>
+                        <TextField
+                            style={inputStyle}
+                            floatingLabelText="Id"
+                            id="key"
+                            value={this.state.key}
+                            onChange={this.handleInput}
+                        />
                         <TextField
                             style={inputStyle}
                             floatingLabelText="Label"
@@ -46,6 +53,7 @@ export default class InputForm extends Component {
                             style={inputStyle}
                             floatingLabelText="Instructions"
                             label="instructions"
+                            id="instructions"
                             value={this.state.instructions}
                             onChange={this.handleInput}
                         />
@@ -57,7 +65,6 @@ export default class InputForm extends Component {
                             toggled={this.state.required}
                             onToggle={this.handleToggle.bind(this)}
                         />
-                    </form>
                 </CardText>
             </Card>
         );
