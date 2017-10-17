@@ -32,7 +32,7 @@ export default class Sidebar extends Component {
     }
     render(){
         const drawerStyle = {
-            top: '4rem'
+            top: '3.95rem'
         },
             addStlye ={
                 position: 'fixed',

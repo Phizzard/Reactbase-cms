@@ -34,10 +34,14 @@ export default class Navbar extends Component {
     }
     render(){
         const   gravatarUrl = 'https://www.gravatar.com/avatar/',
-                options = '?s=40&d=mm'
+                options = '?s=40&d=mm',
+                appBarStyle = {
+                    position: 'fixed',
+                    top: 0
+                }
         ;
         return(
-            <AppBar onLeftIconButtonTouchTap={this.toggleSideBar.bind(this)} title="Reactbase" iconElementRight={this.props.user && <UserNav image={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />} />
+            <AppBar style={appBarStyle} onLeftIconButtonTouchTap={this.toggleSideBar.bind(this)} title="Reactbase" iconElementRight={this.props.user && <UserNav image={`${gravatarUrl}${hash(this.props.user.email)}${options}`} />} />
         );
     }
     toggleSideBar(e){
