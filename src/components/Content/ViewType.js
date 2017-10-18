@@ -129,7 +129,7 @@ export default class ViewContentType extends Component {
                 this.fetchRecords();
             } else {
                 let template = new TemplateController();
-                template.DeleteRecord(this.props.match.params.contentId).then(()=>{
+                template.DeleteTemplate(this.props.match.params.contentId).then(()=>{
                     this.props.updateSidebar();
                     this.setState({
                         redirect: true

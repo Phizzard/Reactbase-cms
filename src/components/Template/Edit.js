@@ -76,6 +76,7 @@ export default class EditTemplate extends Component {
                                                     label={item.label}
                                                     instructions={item.instructions}
                                                     required={item.required}
+                                                    contentId={this.props.match.params.contentId}
                                                 />
                                             )
                                         })
@@ -100,7 +101,7 @@ export default class EditTemplate extends Component {
                                 >
                                     <InputPicker addInput={this.addInput} />
                                 </Dialog>
-                                <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={this.state.saving} label={this.state.saving ? "Saving..." : "Save"} onClick={this.handleAddContentType}></RaisedButton>
+                                <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={this.state.saving} label={this.state.saving ? "Saving..." : "Save all"} onClick={this.handleAddContentType}></RaisedButton>
                             </form>
                         </CardText>
                     </Card>

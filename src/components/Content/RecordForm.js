@@ -144,7 +144,7 @@ export default class RecordForm extends Component {
         let content = new ContentController();
         content.DeleteRecord(this.props.contentId).then(()=>{
             let template = new TemplateController();
-            template.DeleteRecord(this.props.contentId).then(()=>{
+            template.DeleteTemplate(this.props.contentId).then(()=>{
                 this.props.updateSidebar();
                 this.setState({
                     redirect: true

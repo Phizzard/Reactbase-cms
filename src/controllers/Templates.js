@@ -28,14 +28,24 @@ export default class Templates {
     }
 
     UpdateRecord(type, input, data){
-        return firebase.database().ref(`${this.dbRef}${type}/${input}`).update(data).catch((error)=>{
+        return firebase.database().ref(`${this.dbRef}${type}/${input}`).update(data).then((created)=>{
+            return data;
+        }).catch((error)=>{
             return {
                 errorCode: error.code,
                 errorMessage: error.message
             };
         });
     }
-    DeleteRecord(type){
+    DeleteRecord(type, input){
+        return firebase.database().ref(`${this.dbRef}${type}/${input}`).remove().catch((error)=>{
+            return {
+                errorCode: error.code,
+                errorMessage: error.message
+            };
+        });
+    }
+    DeleteTemplate(type){
         return firebase.database().ref(`${this.dbRef}${type}`).remove().catch((error)=>{
             return {
                 errorCode: error.code,
