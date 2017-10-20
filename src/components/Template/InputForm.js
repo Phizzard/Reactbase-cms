@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TemplateController from '../../controllers/Templates';
 import ContentController from '../../controllers/Content';
-import {Card, CardHeader, CardText, TextField, Toggle, RaisedButton} from 'material-ui';
+import {Card, CardHeader, CardText, TextField, Toggle, RaisedButton, Snackbar} from 'material-ui';
 import utl from '../../utl/StringFormatting.js';
 
 export default class InputForm extends Component {
@@ -73,6 +73,7 @@ export default class InputForm extends Component {
                         />
                         <RaisedButton backgroundColor="#28a745" labelColor="#FFF" disabled={this.state.saving} label={this.state.saving ? "Saving..." : "Save"} onClick={this.handleSave.bind(this)}></RaisedButton>
                 </CardText>
+                {this.renderFeedback()}
             </Card>
         );
     }
@@ -87,6 +88,15 @@ export default class InputForm extends Component {
         this.setState({
             [element.id]: toggle
         });
+    }
+    renderFeedback(){
+        return(
+            <Snackbar
+                open={this.state.isSaved}
+                message={this.state.error.length > 0 ? "Uh Oh something went wrong!": "Save Successful!"}
+                autoHideDuration={4000}
+            />
+        );
     }
     handleSave(e){
         e.preventDefault();
