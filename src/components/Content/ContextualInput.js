@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TextField, Toggle, Dialog, RaisedButton, Tab, Tabs} from 'material-ui';
+import {TextField, Toggle} from 'material-ui';
 
 export default class ContextualInput extends Component {
     constructor(props){
@@ -27,10 +27,6 @@ export default class ContextualInput extends Component {
         }
     }
     render(){
-        const inputStyle = {
-                display: 'block'
-            }
-        ;
         switch(this.props.input){
             case 'longText':
                 return(

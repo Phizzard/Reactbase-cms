@@ -3,7 +3,7 @@ import TemplateController from '../../controllers/Templates';
 import InputPicker from './InputPicker';
 import InputForm from './InputForm';
 import utl from '../../utl/StringFormatting.js';
-import {FloatingActionButton, Dialog, RaisedButton, Card, CardHeader, CardActions, CardText, FlatButton, Paper, TextField, Toggle} from 'material-ui';
+import {FloatingActionButton, Dialog, RaisedButton, Card, CardHeader, CardActions, CardText} from 'material-ui';
 import { NavLink } from 'react-router-dom';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import update from 'immutability-helper';
@@ -40,9 +40,6 @@ export default class EditTemplate extends Component {
             margin: 'auto'
         },CardHeaderStyle = {
             backgroundColor: '#5a5a5a'
-        },
-        inputStyle = {
-            display: 'block'
         },
         titleColor = "#FFF",
         editContent = <NavLink to={`/content/${this.props.match.params.contentId}/edit`}><RaisedButton className="float-right" primary={true} label={`Update ${utl.capitalize(this.props.match.params.contentId)} Content`}></RaisedButton></NavLink>
