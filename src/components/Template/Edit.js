@@ -122,7 +122,9 @@ export default class EditTemplate extends Component {
             newInput = {
                 [newId]: {
                     input: id,
-                    label: newTitle
+                    label: newTitle,
+                    instructions: "",
+                    required: false
                 }
             },
             newState = update(this.state.inputs, {$merge: newInput})

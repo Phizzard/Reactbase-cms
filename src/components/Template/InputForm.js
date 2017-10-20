@@ -106,14 +106,14 @@ export default class InputForm extends Component {
                             let content = new ContentController();
                             content.GetRecord(this.props.contentId).then((record)=>{
                                 if(record.type === "single"){
-                                    let newContent = { [this.state.key]: record[oldKey]};
+                                    let newContent = { [this.state.key]: record[oldKey] || ""};
                                     content.UpdateRecord(this.props.contentId, newContent).then(()=>{
                                         content.DeleteInput(this.props.contentId, oldKey);
                                     });
                                 } else {
                                     let newContent;
                                     Object.entries(record.items).forEach(([key,item]) => {
-                                        newContent = {[this.state.key]: item[oldKey]};
+                                        newContent = {[this.state.key]: item[oldKey] || ""};
                                         content.UpdateRecord(this.props.contentId, newContent, key).then(()=>{
                                             content.DeleteInput(this.props.contentId, oldKey, key);
                                         });
