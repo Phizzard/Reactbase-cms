@@ -33,8 +33,8 @@ class App extends Component {
         this.updateSidebar = this.updateSidebar.bind(this);
     }
     componentWillMount(){
+        firebase.initializeApp(config);
         if (this.state.initialized){
-            firebase.initializeApp(config);
             firebase.auth().onAuthStateChanged((user) => {
                 user ?
                     this.setState({ user , authed: true}, this.updateSidebar())
@@ -79,12 +79,8 @@ class App extends Component {
                             )
                             :
                             (
-                                <div className="container-fluid">
-                                    <div className="row">
-                                        <div className="col-md-6 offset-md-3">
-                                            <InitApp />
-                                        </div>
-                                    </div>
+                                <div className="container">
+                                        <InitApp />
                                 </div>
                             )
                         }
