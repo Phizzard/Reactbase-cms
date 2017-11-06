@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Redirect , Route, Switch } from 'react-router-dom';
 import * as firebase from 'firebase';
-import config from './firebase.json';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Navbar from './components/Navbar';
@@ -23,7 +23,7 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            initialized: false,
+            initialized:false,
             user: null,
             authed: false,
             openSidebar: true,
@@ -33,7 +33,7 @@ class App extends Component {
         this.updateSidebar = this.updateSidebar.bind(this);
     }
     componentWillMount(){
-        firebase.initializeApp(config);
+        firebase.initializeApp(this.props.config);
         if (this.state.initialized){
             firebase.auth().onAuthStateChanged((user) => {
                 user ?
@@ -44,7 +44,6 @@ class App extends Component {
             });
         } else {
             console.log('hey');
-
         }
 
     }
@@ -52,7 +51,6 @@ class App extends Component {
         return (
             <MuiThemeProvider>
                 <BrowserRouter>
-
                         {
                             this.state.initialized ?
                             (
