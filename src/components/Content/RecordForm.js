@@ -109,8 +109,9 @@ export default class RecordForm extends Component {
         });
     }
     updateRecordId(input){
+        console.log(input);
         this.setState({
-            recordId: input.recordId.value
+            recordId: input.recordId
         });
     }
     save(e){

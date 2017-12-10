@@ -69,6 +69,7 @@ export default class EditTemplate extends Component {
                                                 <InputForm
                                                     key={key}
                                                     id={key}
+                                                    input={item.input}
                                                     title={utl.capitalize(key)}
                                                     label={item.label}
                                                     instructions={item.instructions}

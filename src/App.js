@@ -23,7 +23,7 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            initialized:false,
+            initialized: props.config || false,
             user: null,
             authed: false,
             openSidebar: true,

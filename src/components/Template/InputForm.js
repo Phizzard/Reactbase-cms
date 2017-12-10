@@ -104,6 +104,7 @@ export default class InputForm extends Component {
             saving: true
         }, ()=>{
             let toBeSaved = {
+                input: this.props.input,
                 instructions: this.state.instructions,
                 label: this.state.label,
                 required: this.state.required
