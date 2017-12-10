@@ -4,7 +4,20 @@ export default class Configuration {
     constructor(dbRef = 'configuration/'){
         this.dbRef = dbRef;
     }
-
+    InitializeDataBase(config){
+        firebase.initializeApp(config);
+        return firebase.database()
+            .ref('/')
+                .update({content: true, templates: true})
+                    .then((result)=>{
+                        return (result);
+                    }).catch((error)=>{
+                        return{
+                            errorCode: error.code,
+                            errorMessage: error.message
+                        };
+                    });
+    }
     List(){
         return firebase.database().ref(`${this.dbRef}`).orderByKey().once('value').then((snapshot)=>{
             let data = snapshot.val();

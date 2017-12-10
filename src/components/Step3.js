@@ -124,14 +124,20 @@ export default class Step3 extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        /*let config = new Configuration();
-        config.CreateRecord('firebase',this.state).then((createdRecord)=>{
+        let config = new Configuration();
+        config.InitializeDataBase({
+            apiKey: this.state.apiKey,
+            databaseURL: this.state.databaseUrl,
+            projectId: this.state.projectId,
+            storageBucket: this.state.storageBucket,
+            messagingSenderId: this.state.messagingSenderId
+        }).then((result)=>{
             console.log('WOO!');
+            this.setState({
+                showForm: !this.state.showForm
+            });
         }).catch((error)=>{
             console.log("Uh OH!");
-        });*/
-        this.setState({
-            showForm: !this.state.showForm
         });
     }
 }

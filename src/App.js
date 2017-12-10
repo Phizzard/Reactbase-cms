@@ -33,8 +33,8 @@ class App extends Component {
         this.updateSidebar = this.updateSidebar.bind(this);
     }
     componentWillMount(){
-        firebase.initializeApp(this.props.config);
-        if (this.state.initialized){
+        if (this.props.config){
+            firebase.initializeApp(this.props.config);
             firebase.auth().onAuthStateChanged((user) => {
                 user ?
                     this.setState({ user , authed: true}, this.updateSidebar())
@@ -42,8 +42,6 @@ class App extends Component {
                     this.setState({ user: null, authed: false})
                 ;
             });
-        } else {
-            console.log('hey');
         }
 
     }

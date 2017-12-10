@@ -1,0 +1,9 @@
+{
+    "apiKey": "AIzaSyDbO2HgAhiZCFggH4YftADxUF9Xcv6HtCo",
+    "authDomain": "test-rb-cms.firebaseapp.com",
+    "databaseURL": "https://test-rb-cms.firebaseio.com",
+    "projectId": "test-rb-cms",
+    "storageBucket": "test-rb-cms.appspot.com",
+    "messagingSenderId": "990260112512"
+
+}
