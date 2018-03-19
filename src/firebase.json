@@ -1,0 +1,8 @@
+{
+    "apiKey": "AIzaSyDydrLFhEJbZ3ATdOaiA1Cv4iv3pHzARzg",
+    "authDomain": "reactbase-store.firebaseapp.com",
+    "databaseURL": "https://reactbase-store.firebaseio.com",
+    "projectId": "reactbase-store",
+    "storageBucket": "reactbase-store.appspot.com",
+    "messagingSenderId": "677523178489"
+  }
